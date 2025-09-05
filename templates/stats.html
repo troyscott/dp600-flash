@@ -1,0 +1,18 @@
+<div class="stats-container">
+    <div class="stat">
+        <span class="stat-label">Score:</span>
+        <span class="stat-value">{{ score }}</span>
+    </div>
+    <div class="stat">
+        <span class="stat-label">Streak:</span>
+        <span class="stat-value streak">{{ streak }}</span>
+    </div>
+    <div class="stat">
+        <span class="stat-label">Progress:</span>
+        <span class="stat-value">{{ cards_studied }} / {{ total_cards }}</span>
+    </div>
+    
+    <div class="progress-bar">
+        <div class="progress-fill" style="width: {{ (cards_studied / total_cards * 100) }}%"></div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="quick-complete">
+    <h2>📚 Review Complete!</h2>
+    
+    <div class="review-summary">
+        <div class="cards-reviewed">
+            <span class="big-number">{{ total_cards }}</span>
+            <span class="big-label">Cards Reviewed</span>
+        </div>
+        
+        <div class="review-message">
+            <p class="encouraging">Great job reviewing those DP-600 concepts! 💪</p>
+            <p class="subtitle">Knowledge retention comes from regular review.</p>
+        </div>
+    </div>
+    
+    <div class="quick-options">
+        <button hx-post="/start-session" 
+                hx-vals='{"mode": "quick", "count": "5"}'
+                hx-target="#flashcard-area" 
+                hx-swap="innerHTML"
+                class="btn btn-secondary">
+            🔄 Review 5 More
+        </button>
+        <button hx-post="/start-session" 
+                hx-vals='{"mode": "quick", "count": "10"}'
+                hx-target="#flashcard-area" 
+                hx-swap="innerHTML"
+                class="btn btn-secondary">
+            📚 Review 10 More
+        </button>
+        <button onclick="location.href='/'" class="btn btn-primary">
+            🏠 Back to Study Modes
+        </button>
+    </div>
+</div>

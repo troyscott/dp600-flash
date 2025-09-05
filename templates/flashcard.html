@@ -1,0 +1,124 @@
+<div class="flashcard-container">
+    <div class="card-info">
+        <span class="category">{{ card.category }}</span>
+        <div class="home-button-center">
+            <button onclick="location.href='/'" class="btn btn-secondary home-btn">
+                🏠 Home
+            </button>
+        </div>
+        <div class="info-right">
+            <span class="card-number">Card {{ session.current_card_index + 1 }} of {{ session.shuffled_cards|length }}</span>
+            {% if session.study_mode == 'timed' and session.time_limit > 0 %}
+                <span class="timer" id="timer">⏱️ {{ session.time_limit }}:00</span>
+            {% endif %}
+            {% if session.study_mode == 'topic' and session.topic_filter %}
+                <span class="mode-badge">Topic: {{ session.topic_filter }}</span>
+            {% elif session.study_mode == 'quick' %}
+                <span class="mode-badge">⚡ Quick Study</span>
+            {% elif session.study_mode == 'timed' %}
+                <span class="mode-badge">⏱️ Timed Practice</span>
+            {% elif session.study_mode == 'full_study' %}
+                <span class="mode-badge">📚 Full Study</span>
+            {% elif session.study_mode == 'flash_cards' %}
+                <span class="mode-badge">🎯 Flash Cards</span>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="flashcard" id="flashcard">
+        <div class="flashcard-front" id="front">
+            <h3>{{ card.question }}</h3>
+        </div>
+        <div class="flashcard-back" id="back" style="display: none;">
+            <h4>Answer:</h4>
+            <div class="answer-content">{{ card.answer | markdown | safe }}</div>
+        </div>
+    </div>
+    
+    <div class="card-controls">
+        {% if session.study_mode in ['quick', 'full_study'] %}
+            <!-- Review modes: Simple review (no scoring) -->
+            <button onclick="flipCard()" class="btn btn-secondary" id="flip-btn">
+                🔄 Show Answer
+            </button>
+            
+            <button hx-get="/next-card"
+                    hx-target="#flashcard-area"
+                    hx-swap="innerHTML"
+                    class="btn btn-primary"
+                    id="next-btn"
+                    style="display: none;">
+                Next Card →
+            </button>
+        {% else %}
+            <!-- Scoring modes: Topic Focus, Timed Practice, Flash Cards -->
+            <button onclick="flipCard()" class="btn btn-secondary" id="flip-btn">
+                🔄 Show Answer
+            </button>
+            
+            <div id="answer-buttons" style="display: none;">
+                <button hx-post="/answer"
+                        hx-vals='{"correct": "false"}'
+                        hx-target="#stats"
+                        hx-swap="innerHTML"
+                        class="btn btn-wrong">
+                    ❌ Incorrect
+                </button>
+                <button hx-post="/answer"
+                        hx-vals='{"correct": "true"}'
+                        hx-target="#stats" 
+                        hx-swap="innerHTML"
+                        class="btn btn-correct">
+                    ✅ Correct
+                </button>
+            </div>
+            
+            <button hx-get="/next-card"
+                    hx-target="#flashcard-area"
+                    hx-swap="innerHTML"
+                    class="btn btn-primary"
+                    id="next-btn"
+                    style="display: none;">
+                Next Card →
+            </button>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+function flipCard() {
+    const front = document.getElementById('front');
+    const back = document.getElementById('back');
+    const flipBtn = document.getElementById('flip-btn');
+    const answerButtons = document.getElementById('answer-buttons');
+    const nextBtn = document.getElementById('next-btn');
+    
+    front.style.display = 'none';
+    back.style.display = 'block';
+    flipBtn.style.display = 'none';
+    
+    // Review modes (Quick Study, Full Study): just show next button
+    const modeBadge = document.querySelector('.mode-badge')?.textContent;
+    if (modeBadge?.includes('Quick Study') || modeBadge?.includes('Full Study')) {
+        nextBtn.style.display = 'inline-block';
+    } else {
+        // Regular modes: show answer buttons
+        if (answerButtons) {
+            answerButtons.style.display = 'flex';
+        }
+    }
+}
+
+// Show next button after answering (for non-quick modes)
+document.body.addEventListener('htmx:afterRequest', function(evt) {
+    if (evt.detail.elt.hasAttribute('hx-post') && evt.detail.elt.getAttribute('hx-post') === '/answer') {
+        const answerButtons = document.getElementById('answer-buttons');
+        const nextBtn = document.getElementById('next-btn');
+        const stats = document.getElementById('stats');
+        
+        if (answerButtons) answerButtons.style.display = 'none';
+        if (nextBtn) nextBtn.style.display = 'inline-block';
+        if (stats) stats.style.display = 'block';
+    }
+});
+</script>

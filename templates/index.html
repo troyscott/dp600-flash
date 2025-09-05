@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="game-area">
+    <div class="stats-bar" id="stats" style="display: none;">
+        <!-- Stats will be loaded here -->
+    </div>
+    
+    <div class="flashcard-area" id="flashcard-area">
+        <div class="study-modes">
+            <h3>Choose Your Study Mode</h3>
+            
+            <div class="mode-grid">
+                <div class="mode-card">
+                    <div class="mode-icon">🎯</div>
+                    <h4>Topic Focus</h4>
+                    <p>Study specific exam areas</p>
+                    <select id="topic-select" class="topic-selector">
+                        <option value="">Select Topic</option>
+                        <option value="Maintain Analytics Solution">🛡️ Maintain Analytics Solution</option>
+                        <option value="Prepare Data">📊 Prepare Data</option>
+                        <option value="Semantic Models">🎯 Semantic Models</option>
+                    </select>
+                    <button hx-post="/start-session" 
+                            hx-vals="js:{mode: 'topic', topic: document.getElementById('topic-select').value}"
+                            hx-target="#flashcard-area" 
+                            hx-swap="innerHTML"
+                            class="btn btn-secondary mode-btn"
+                            onclick="return validateTopicSelection()">
+                        Start Topic Study
+                    </button>
+                </div>
+                
+                <div class="mode-card">
+                    <div class="mode-icon">⏱️</div>
+                    <h4>Timed Practice</h4>
+                    <p>Exam-style time pressure</p>
+                    <div class="time-options">
+                        <label><input type="radio" name="timer" value="5" checked> 5 min</label>
+                        <label><input type="radio" name="timer" value="10"> 10 min</label>
+                        <label><input type="radio" name="timer" value="15"> 15 min</label>
+                    </div>
+                    <button hx-post="/start-session" 
+                            hx-vals="js:{mode: 'timed', time: document.querySelector('input[name=timer]:checked').value}"
+                            hx-target="#flashcard-area" 
+                            hx-swap="innerHTML"
+                            class="btn btn-secondary mode-btn">
+                        Start Timed Study
+                    </button>
+                </div>
+                
+                <div class="mode-card">
+                    <div class="mode-icon">⚡</div>
+                    <h4>Quick Study</h4>
+                    <p>5-10 cards for busy schedules</p>
+                    <div class="quick-options">
+                        <label><input type="radio" name="quick" value="5" checked> 5 cards</label>
+                        <label><input type="radio" name="quick" value="10"> 10 cards</label>
+                    </div>
+                    <button hx-post="/start-session" 
+                            hx-vals="js:{mode: 'quick', count: document.querySelector('input[name=quick]:checked').value}"
+                            hx-target="#flashcard-area" 
+                            hx-swap="innerHTML"
+                            class="btn btn-secondary mode-btn">
+                        Start Quick Study
+                    </button>
+                </div>
+            </div>
+            
+            <div class="classic-mode">
+                <div class="full-modes">
+                    <button hx-post="/start-session" 
+                            hx-vals='{"mode": "full_study"}'
+                            hx-target="#flashcard-area" 
+                            hx-swap="innerHTML"
+                            class="btn btn-secondary full-btn">
+                        📚 Full Study (Review Only)
+                    </button>
+                    <button hx-post="/start-session" 
+                            hx-vals='{"mode": "flash_cards"}'
+                            hx-target="#flashcard-area" 
+                            hx-swap="innerHTML"
+                            class="btn btn-primary full-btn">
+                        🎯 Flash Cards (With Scoring)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="study-areas-compact">
+    <p class="areas-title">Exam Topics Covered:</p>
+    <div class="areas-grid">
+        <span class="area-tag">🛡️ Maintain Analytics Solution</span>
+        <span class="area-tag">📊 Prepare Data</span>
+        <span class="area-tag">🎯 Semantic Models</span>
+    </div>
+</div>
+{% endblock %}
