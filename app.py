@@ -8,20 +8,29 @@ from flashcard_loader import load_all_flashcards, reload_flashcards
 app = Flask(__name__)
 app.secret_key = 'dp600-study-secret-key'
 
-# Configure markdown with common extensions
+# Configure markdown with basic extensions
 md = markdown.Markdown(extensions=[
-    'extra',      # Tables, code blocks, etc.
-    'codehilite', # Syntax highlighting
-    'nl2br'       # Convert newlines to <br>
+    'extra',       # Tables, code blocks, lists, etc.
+    'nl2br'        # Convert newlines to <br>
 ])
 
 # Custom Jinja2 filter for markdown
 @app.template_filter('markdown')
 def markdown_filter(text):
-    """Convert markdown text to HTML"""
+    """Convert markdown text to HTML with flashcard-friendly formatting"""
     if not text:
         return ''
-    return md.convert(str(text))
+    
+    # Clean up the text first
+    text = str(text).strip()
+    
+    # Convert to HTML
+    html = md.convert(text)
+    
+    # Reset the markdown instance to avoid state issues
+    md.reset()
+    
+    return html
 
 # Load flashcards from markdown files
 print("🚀 Loading DP-600 flashcards from markdown files...")
@@ -74,17 +83,32 @@ def start_session():
     if not cards_to_study:
         return render_template('no_cards.html', message="No cards found for this topic.")
     
-    session['shuffled_cards'] = random.sample(cards_to_study, len(cards_to_study))
+    # Store only card IDs to avoid large session cookies
+    shuffled_cards = random.sample(cards_to_study, len(cards_to_study))
+    session['shuffled_card_ids'] = [card['id'] for card in shuffled_cards]
     session['total_cards'] = len(cards_to_study)
     
     return get_next_card()
 
+def get_card_by_id(card_id):
+    """Get full card data by ID"""
+    for card in FLASHCARDS:
+        if card['id'] == card_id:
+            return card
+    return None
+
 @app.route('/next-card')
 def get_next_card():
-    if 'shuffled_cards' not in session or session['current_card_index'] >= len(session['shuffled_cards']):
+    print(f"DEBUG: get_next_card called - current_index: {session.get('current_card_index', 'None')}, total_cards: {len(session.get('shuffled_card_ids', []))}")
+    
+    if 'shuffled_card_ids' not in session or session['current_card_index'] >= len(session['shuffled_card_ids']):
+        print(f"DEBUG: Session complete - showing completion screen for mode: {session.get('study_mode')}")
         # Check study mode for different completion screens
-        if session.get('study_mode') in ['quick', 'full_study']:
+        if session.get('study_mode') == 'quick':
             return render_template('quick_complete.html', 
+                                 total_cards=session.get('total_cards', 0))
+        elif session.get('study_mode') == 'full_study':
+            return render_template('full_study_complete.html', 
                                  total_cards=session.get('total_cards', 0))
         else:
             return render_template('session_complete.html', 
@@ -92,13 +116,25 @@ def get_next_card():
                                  total_cards=len(FLASHCARDS),
                                  correct_answers=session.get('correct_answers', 0))
     
-    current_card = session['shuffled_cards'][session['current_card_index']]
+    # Get current card by ID
+    current_card_id = session['shuffled_card_ids'][session['current_card_index']]
+    current_card = get_card_by_id(current_card_id)
     
-    # For review modes (quick study, full study), just advance to next card without scoring
-    if session.get('study_mode') in ['quick', 'full_study']:
-        session['current_card_index'] += 1
+    if not current_card:
+        print(f"ERROR: Card with ID {current_card_id} not found!")
+        return render_template('no_cards.html', message="Card not found.")
+    
+    print(f"DEBUG: Showing card {session['current_card_index'] + 1}: {current_card['question'][:50]}...")
     
     return render_template('flashcard.html', card=current_card)
+
+@app.route('/next-card-review', methods=['POST'])
+def next_card_review():
+    """Advance to next card in review modes (Quick Study, Full Study)"""
+    if session.get('study_mode') in ['quick', 'full_study']:
+        session['current_card_index'] += 1
+        print(f"DEBUG: Advanced to card {session['current_card_index']} of {len(session.get('shuffled_card_ids', []))}")
+    return get_next_card()
 
 @app.route('/answer', methods=['POST'])
 def submit_answer():

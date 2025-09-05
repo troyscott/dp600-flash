@@ -1,0 +1,35 @@
+<div class="full-study-complete">
+    <h2>📚 Full Study Complete!</h2>
+    
+    <div class="study-summary">
+        <div class="cards-reviewed">
+            <span class="big-number">{{ total_cards }}</span>
+            <span class="big-label">Cards Reviewed</span>
+        </div>
+        
+        <div class="completion-message">
+            <p class="excellent">🌟 Excellent work! You've reviewed all DP-600 flashcards!</p>
+            <p class="subtitle">You're building solid knowledge for the Microsoft Fabric Analytics Engineer certification.</p>
+        </div>
+    </div>
+    
+    <div class="study-options">
+        <button hx-post="/start-session" 
+                hx-vals='{"mode": "full_study"}'
+                hx-target="#flashcard-area" 
+                hx-swap="innerHTML"
+                class="btn btn-secondary">
+            🔄 Review Again
+        </button>
+        <button hx-post="/start-session" 
+                hx-vals='{"mode": "flash_cards"}'
+                hx-target="#flashcard-area" 
+                hx-swap="innerHTML"
+                class="btn btn-primary">
+            🎯 Practice with Scoring
+        </button>
+        <button onclick="location.href='/'" class="btn btn-secondary">
+            🏠 Back to Study Modes
+        </button>
+    </div>
+</div>

@@ -4,7 +4,18 @@
 
 ### Card 1
 **Q:** What is the primary language used for data transformation in Microsoft Fabric pipelines?
-**A:** SQL, KQL (Kusto Query Language), and Power Query M language. SQL is most commonly used for data warehouse operations.
+**A:** The main languages for data transformation in Microsoft Fabric are:
+
+- **SQL** - Most commonly used for data warehouse operations
+- **KQL (Kusto Query Language)** - Used for real-time analytics and log queries
+- **Power Query M** - Used in dataflows for ETL processes
+
+Example KQL query:
+```
+Events
+| where Timestamp > ago(1h)
+| summarize count() by EventType
+```
 
 **Difficulty:** Basic
 **Tags:** sql, kql, transformation, pipelines
