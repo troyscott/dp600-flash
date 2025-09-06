@@ -24,17 +24,42 @@ Events
 
 ### Card 2
 **Q:** What is the difference between a lakehouse and data warehouse in Fabric?
-**A:** **Lakehouse:**
-- Stores **unstructured/semi-structured** data
-- Uses *Delta Lake format* for ACID transactions
-- Supports both `SQL` and `Spark` APIs
-- Optimized for data science workloads
+**A:** Here are the key differences between these two storage options:
 
-**Data Warehouse:**
-- Stores **structured data** only
-- Optimized for analytical queries
-- Uses `SQL` endpoint exclusively
-- Better for traditional BI scenarios
+**Lakehouse Features:**
+1. **Data Types**
+   - Unstructured data (JSON, images, logs)
+   - Semi-structured data (Parquet, CSV)
+   - Structured data (tables)
+
+2. **Technology Stack**
+   - Uses *Delta Lake format* for ACID transactions
+   - Supports both `SQL` and `Spark` APIs
+   - Schema-on-read approach
+
+3. **Best Use Cases**
+   - Data science workloads
+   - Real-time analytics
+   - Data exploration and discovery
+
+**Data Warehouse Features:**
+1. **Data Types**
+   - Structured data only
+   - Predefined schemas required
+
+2. **Technology Stack** 
+   - Uses `SQL` endpoint exclusively
+   - Traditional relational database model
+   - Schema-on-write approach
+
+3. **Best Use Cases**
+   - Traditional BI scenarios
+   - Complex analytical queries
+   - Enterprise reporting
+
+**Performance Comparison:**
+- **Lakehouse**: Better for flexible analytics and ML
+- **Data Warehouse**: Better for consistent, high-performance queries
 
 **Difficulty:** Intermediate
 **Tags:** lakehouse, data-warehouse, storage, delta-lake

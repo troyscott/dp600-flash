@@ -7,7 +7,7 @@
             </button>
         </div>
         <div class="info-right">
-            <span class="card-number">Card {{ session.current_card_index + 1 }} of {{ session.shuffled_cards|length }}</span>
+            <span class="card-number">Card {{ session.current_card_index + 1 }} of {{ session.total_cards }}</span>
             {% if session.study_mode == 'timed' and session.time_limit > 0 %}
                 <span class="timer" id="timer">⏱️ {{ session.time_limit }}:00</span>
             {% endif %}

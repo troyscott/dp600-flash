@@ -166,25 +166,79 @@ header h1 {
     font-size: 1.1rem;
     color: #34495e;
     line-height: 1.6;
+    text-align: left;
 }
 
 .answer-content p {
     margin-bottom: 10px;
 }
 
-.answer-content ul, .answer-content ol {
-    margin: 10px 0;
+/* Unordered lists (bullets) */
+.answer-content ul {
+    margin: 12px 0;
+    padding-left: 24px;
+    list-style-type: disc;
+}
+
+.answer-content ul ul {
+    margin: 6px 0;
     padding-left: 20px;
+    list-style-type: circle;
 }
 
+.answer-content ul ul ul {
+    list-style-type: square;
+}
+
+/* Ordered lists (numbers) */
+.answer-content ol {
+    margin: 12px 0;
+    padding-left: 24px;
+    list-style-type: decimal;
+}
+
+.answer-content ol ol {
+    margin: 6px 0;
+    padding-left: 20px;
+    list-style-type: lower-alpha;
+}
+
+.answer-content ol ol ol {
+    list-style-type: lower-roman;
+}
+
+/* List items */
 .answer-content li {
-    margin-bottom: 6px;
-    line-height: 1.5;
+    margin-bottom: 8px;
+    line-height: 1.6;
+    padding-left: 4px;
 }
 
-.answer-content ul ul, .answer-content ol ol {
-    margin-top: 5px;
-    margin-bottom: 5px;
+.answer-content li:last-child {
+    margin-bottom: 4px;
+}
+
+/* Nested lists spacing */
+.answer-content li > ul, 
+.answer-content li > ol {
+    margin-top: 6px;
+}
+
+/* Definition lists */
+.answer-content dl {
+    margin: 12px 0;
+}
+
+.answer-content dt {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-top: 8px;
+}
+
+.answer-content dd {
+    margin-left: 20px;
+    margin-bottom: 8px;
+    color: #34495e;
 }
 
 .answer-content strong {

@@ -8,11 +8,19 @@ from flashcard_loader import load_all_flashcards, reload_flashcards
 app = Flask(__name__)
 app.secret_key = 'dp600-study-secret-key'
 
-# Configure markdown with basic extensions
+# Configure markdown with enhanced list support
 md = markdown.Markdown(extensions=[
-    'extra',       # Tables, code blocks, lists, etc.
-    'nl2br'        # Convert newlines to <br>
-])
+    'extra',       # Tables, code blocks, fenced code, etc.
+    'nl2br',       # Convert newlines to <br> 
+    'attr_list',   # Add attributes to elements
+    'def_list'     # Definition lists
+], extension_configs={
+    'extra': {
+        'markdown.extensions.fenced_code': {
+            'use_pygments': False
+        }
+    }
+})
 
 # Custom Jinja2 filter for markdown
 @app.template_filter('markdown')

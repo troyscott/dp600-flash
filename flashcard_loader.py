@@ -93,21 +93,23 @@ def get_category_from_path(file_path: Path) -> str:
 
 def clean_text(text: str) -> str:
     """
-    Clean up text formatting from markdown.
+    Clean up text formatting while preserving markdown structure.
     
     Args:
         text: Raw text from markdown
         
     Returns:
-        Cleaned text
+        Cleaned text with preserved formatting
     """
-    # Remove extra whitespace and newlines
-    text = re.sub(r'\s+', ' ', text)
+    # Remove leading/trailing whitespace but preserve internal structure
     text = text.strip()
     
-    # Preserve bullet points and line breaks for answers
-    text = re.sub(r'\s*-\s*\*\*([^*]+)\*\*\s*-\s*', r'\n- **\1** - ', text)
-    text = re.sub(r'\n\s*-\s*', r'\n- ', text)
+    # Remove excessive blank lines (3+ consecutive newlines become 2)
+    text = re.sub(r'\n{3,}', '\n\n', text)
+    
+    # Clean up line endings but preserve list structure
+    text = re.sub(r'[ \t]+\n', '\n', text)  # Remove trailing spaces
+    text = re.sub(r'\n[ \t]+', '\n', text)  # Remove leading spaces on new lines
     
     return text
 
