@@ -38,7 +38,9 @@ def split_pdf_by_size(input_path, max_size_mb=30):
     if not input_path.exists():
         raise FileNotFoundError(f"Input file not found: {input_path}")
     
-    output_dir = Path("utils/output")
+    # Create output directory relative to script location
+    script_dir = Path(__file__).parent
+    output_dir = script_dir / "output"
     output_dir.mkdir(exist_ok=True)
     
     # Read the original PDF
@@ -74,14 +76,20 @@ def split_pdf_by_size(input_path, max_size_mb=30):
             if temp_file:
                 os.unlink(temp_file.name)
             
-            # If we exceed the size limit and we have at least one page, break
-            if current_size > max_size_mb and page_num > start_page:
-                end_page = page_num - 1
-                # Remove the last page that pushed us over the limit
-                writer = PdfWriter()
-                for p in range(start_page, end_page + 1):
-                    writer.add_page(reader.pages[p])
-                break
+            # Check if we've exceeded the size limit
+            if current_size > max_size_mb:
+                if page_num > start_page:
+                    # We have multiple pages, remove the last one that pushed us over
+                    end_page = page_num - 1
+                    writer = PdfWriter()
+                    for p in range(start_page, end_page + 1):
+                        writer.add_page(reader.pages[p])
+                    break
+                else:
+                    # Single page is too large - include it anyway with warning
+                    end_page = page_num
+                    print(f"⚠️  Warning: Page {page_num + 1} is {current_size:.1f} MB (exceeds {max_size_mb} MB limit)")
+                    break
             else:
                 end_page = page_num
         
