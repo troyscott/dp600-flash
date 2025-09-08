@@ -73,20 +73,27 @@ def start_session():
     session['time_limit'] = int(time_limit) if time_limit.isdigit() else 0
     session['start_time'] = datetime.now().isoformat()
     
-    # Filter cards based on study mode
-    cards_to_study = FLASHCARDS.copy()
-    
-    if mode == 'topic' and topic:
+    # Apply topic filter first (for all modes)
+    if topic:
         cards_to_study = [card for card in FLASHCARDS if card['category'] == topic]
         session['topic_filter'] = topic
-    elif mode == 'quick' and card_count.isdigit():
-        cards_to_study = random.sample(FLASHCARDS, min(int(card_count), len(FLASHCARDS)))
+        if not cards_to_study:
+            return render_template('no_cards.html', message=f"No cards found for topic: {topic}")
+    else:
+        cards_to_study = FLASHCARDS.copy()
+        session['topic_filter'] = None
+    
+    # Apply mode-specific filtering/logic
+    if mode == 'quick' and card_count.isdigit():
+        # Limit to requested number of cards from filtered set
+        max_cards = min(int(card_count), len(cards_to_study))
+        cards_to_study = random.sample(cards_to_study, max_cards)
     elif mode == 'timed':
-        # For timed mode, we'll use all cards but track time
+        # Use filtered cards (by topic if selected) with time tracking
         session['time_remaining'] = int(time_limit) * 60  # Convert to seconds
     elif mode in ['full_study', 'flash_cards']:
-        # Both modes use all cards, but different UI behavior
-        cards_to_study = FLASHCARDS.copy()
+        # Use filtered cards (by topic if selected)
+        pass
     
     if not cards_to_study:
         return render_template('no_cards.html', message="No cards found for this topic.")

@@ -11,9 +11,7 @@
             {% if session.study_mode == 'timed' and session.time_limit > 0 %}
                 <span class="timer" id="timer">⏱️ {{ session.time_limit }}:00</span>
             {% endif %}
-            {% if session.study_mode == 'topic' and session.topic_filter %}
-                <span class="mode-badge">Topic: {{ session.topic_filter }}</span>
-            {% elif session.study_mode == 'quick' %}
+            {% if session.study_mode == 'quick' %}
                 <span class="mode-badge">⚡ Quick Study</span>
             {% elif session.study_mode == 'timed' %}
                 <span class="mode-badge">⏱️ Timed Practice</span>
@@ -21,6 +19,12 @@
                 <span class="mode-badge">📚 Full Study</span>
             {% elif session.study_mode == 'flash_cards' %}
                 <span class="mode-badge">🎯 Flash Cards</span>
+            {% endif %}
+            
+            {% if session.topic_filter %}
+                <span class="topic-badge">{{ session.topic_filter }}</span>
+            {% else %}
+                <span class="topic-badge">All Topics</span>
             {% endif %}
         </div>
     </div>
@@ -93,18 +97,35 @@ function flipCard() {
     const answerButtons = document.getElementById('answer-buttons');
     const nextBtn = document.getElementById('next-btn');
     
-    front.style.display = 'none';
-    back.style.display = 'block';
-    flipBtn.style.display = 'none';
-    
-    // Review modes (Quick Study, Full Study): just show next button
-    const modeBadge = document.querySelector('.mode-badge')?.textContent;
-    if (modeBadge?.includes('Quick Study') || modeBadge?.includes('Full Study')) {
-        nextBtn.style.display = 'inline-block';
-    } else {
-        // Regular modes: show answer buttons
+    // Check current state and toggle
+    if (front.style.display === 'none') {
+        // Currently showing answer, flip to question
+        front.style.display = 'block';
+        back.style.display = 'none';
+        flipBtn.innerHTML = '🔄 Show Answer';
+        
+        // Hide other buttons when showing question
         if (answerButtons) {
-            answerButtons.style.display = 'flex';
+            answerButtons.style.display = 'none';
+        }
+        if (nextBtn) {
+            nextBtn.style.display = 'none';
+        }
+    } else {
+        // Currently showing question, flip to answer
+        front.style.display = 'none';
+        back.style.display = 'block';
+        flipBtn.innerHTML = '🔄 Show Question';
+        
+        // Show appropriate buttons when showing answer
+        const modeBadge = document.querySelector('.mode-badge')?.textContent;
+        if (modeBadge?.includes('Quick Study') || modeBadge?.includes('Full Study')) {
+            nextBtn.style.display = 'inline-block';
+        } else {
+            // Regular modes: show answer buttons
+            if (answerButtons) {
+                answerButtons.style.display = 'flex';
+            }
         }
     }
 }

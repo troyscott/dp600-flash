@@ -4,7 +4,7 @@ A comprehensive gamified flashcard app for Microsoft Fabric Analytics Engineer (
 
 ## 🚀 Features
 
-- **5 Study Modes**: Topic Focus, Quick Study, Timed Practice, Full Study, Flash Cards
+- **4 Study Modes**: Quick Study, Timed Practice, Full Study, Flash Cards
 - **AI-Powered Content Generation**: Hybrid LLM + rule-based flashcard generation
 - **Smart Content Analysis**: Auto-categorizes content into DP-600 exam objectives
 - **PDF Processing Pipeline**: Split PDFs → Generate flashcards → Study immediately
@@ -64,11 +64,14 @@ content/
 
 ## 📚 Study Modes
 
-- **Topic Focus**: Study specific DP-600 exam areas with scoring and streaks
+All modes now support **topic filtering** - study specific DP-600 exam areas or mix all topics:
+
 - **Quick Study**: Stress-free review mode (5/10 cards, no scoring/timing)  
 - **Timed Practice**: Exam simulation with time pressure (5/10/15 minutes)
 - **Full Study**: Complete session through all available flashcards
 - **Flash Cards**: Full gamified experience with correct/incorrect tracking
+
+**Topic Options**: All Topics, Maintain Analytics Solution, Prepare Data, Semantic Models
 
 ## 🛠️ Utilities
 
