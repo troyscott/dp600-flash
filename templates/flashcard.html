@@ -9,7 +9,9 @@
         <div class="info-right">
             <span class="card-number">Card {{ session.current_card_index + 1 }} of {{ session.total_cards }}</span>
             {% if session.study_mode == 'timed' and session.time_limit > 0 %}
-                <span class="timer" id="timer">⏱️ {{ session.time_limit }}:00</span>
+                {% set minutes = (session.time_remaining // 60) %}
+                {% set seconds = (session.time_remaining % 60) %}
+                <span class="timer" id="timer">⏱️ {{ minutes }}:{{ "%02d"|format(seconds) }}</span>
             {% endif %}
             {% if session.study_mode == 'quick' %}
                 <span class="mode-badge">⚡ Quick Study</span>
@@ -40,51 +42,72 @@
     </div>
     
     <div class="card-controls">
-        {% if session.study_mode in ['quick', 'full_study'] %}
-            <!-- Review modes: Simple review (no scoring) -->
-            <button onclick="flipCard()" class="btn btn-secondary" id="flip-btn">
+        <!-- Navigation: Always visible for moving through cards and showing answers -->
+        <div class="navigation-bar">
+            {% if session.study_mode in ['quick', 'full_study'] %}
+                <button hx-post="/prev-card-review"
+                        hx-target="#flashcard-area"
+                        hx-swap="innerHTML"
+                        class="btn btn-secondary nav-btn"
+                        id="prev-btn"
+                        {% if session.current_card_index == 0 %}disabled{% endif %}>
+                    Previous
+                </button>
+            {% else %}
+                <button hx-get="/prev-card"
+                        hx-target="#flashcard-area"
+                        hx-swap="innerHTML"
+                        class="btn btn-secondary nav-btn"
+                        id="prev-btn"
+                        {% if session.current_card_index == 0 %}disabled{% endif %}>
+                    Previous
+                </button>
+            {% endif %}
+            
+            <button onclick="flipCard()" class="btn btn-info flip-btn" id="flip-btn">
                 🔄 Show Answer
             </button>
             
-            <button hx-post="/next-card-review"
-                    hx-target="#flashcard-area"
-                    hx-swap="innerHTML"
-                    class="btn btn-primary"
-                    id="next-btn"
-                    style="display: none;">
-                Next Card →
-            </button>
-        {% else %}
-            <!-- Scoring modes: Topic Focus, Timed Practice, Flash Cards -->
-            <button onclick="flipCard()" class="btn btn-secondary" id="flip-btn">
-                🔄 Show Answer
-            </button>
-            
-            <div id="answer-buttons" style="display: none;">
-                <button hx-post="/answer"
-                        hx-vals='{"correct": "false"}'
-                        hx-target="#stats"
+            {% if session.study_mode in ['quick', 'full_study'] %}
+                <button hx-post="/next-card-review"
+                        hx-target="#flashcard-area"
                         hx-swap="innerHTML"
-                        class="btn btn-wrong">
-                    ❌ Incorrect
+                        class="btn btn-primary nav-btn"
+                        id="next-btn">
+                    Next
                 </button>
-                <button hx-post="/answer"
-                        hx-vals='{"correct": "true"}'
-                        hx-target="#stats" 
+            {% else %}
+                <button hx-get="/next-card"
+                        hx-target="#flashcard-area"
                         hx-swap="innerHTML"
-                        class="btn btn-correct">
-                    ✅ Correct
+                        class="btn btn-primary nav-btn"
+                        id="next-btn">
+                    Next
                 </button>
+            {% endif %}
+        </div>
+        
+        {% if session.study_mode not in ['quick', 'full_study'] %}
+            <!-- Scoring: Separate evaluation of your knowledge -->
+            <div class="scoring-bar" id="scoring-controls" style="display: none;">
+                <div class="scoring-label">How did you do?</div>
+                <div class="scoring-buttons">
+                    <button hx-post="/answer"
+                            hx-vals='{"correct": "false"}'
+                            hx-target="#stats"
+                            hx-swap="innerHTML"
+                            class="btn btn-wrong score-btn">
+                        ❌ Incorrect
+                    </button>
+                    <button hx-post="/answer"
+                            hx-vals='{"correct": "true"}'
+                            hx-target="#stats" 
+                            hx-swap="innerHTML"
+                            class="btn btn-correct score-btn">
+                        ✅ Correct
+                    </button>
+                </div>
             </div>
-            
-            <button hx-get="/next-card"
-                    hx-target="#flashcard-area"
-                    hx-swap="innerHTML"
-                    class="btn btn-primary"
-                    id="next-btn"
-                    style="display: none;">
-                Next Card →
-            </button>
         {% endif %}
     </div>
 </div>
@@ -94,8 +117,7 @@ function flipCard() {
     const front = document.getElementById('front');
     const back = document.getElementById('back');
     const flipBtn = document.getElementById('flip-btn');
-    const answerButtons = document.getElementById('answer-buttons');
-    const nextBtn = document.getElementById('next-btn');
+    const scoringControls = document.getElementById('scoring-controls');
     
     // Check current state and toggle
     if (front.style.display === 'none') {
@@ -104,12 +126,9 @@ function flipCard() {
         back.style.display = 'none';
         flipBtn.innerHTML = '🔄 Show Answer';
         
-        // Hide other buttons when showing question
-        if (answerButtons) {
-            answerButtons.style.display = 'none';
-        }
-        if (nextBtn) {
-            nextBtn.style.display = 'none';
+        // Hide scoring when showing question
+        if (scoringControls) {
+            scoringControls.style.display = 'none';
         }
     } else {
         // Currently showing question, flip to answer
@@ -117,29 +136,92 @@ function flipCard() {
         back.style.display = 'block';
         flipBtn.innerHTML = '🔄 Show Question';
         
-        // Show appropriate buttons when showing answer
+        // Show scoring controls for scoring modes (after showing answer)
         const modeBadge = document.querySelector('.mode-badge')?.textContent;
-        if (modeBadge?.includes('Quick Study') || modeBadge?.includes('Full Study')) {
-            nextBtn.style.display = 'inline-block';
-        } else {
-            // Regular modes: show answer buttons
-            if (answerButtons) {
-                answerButtons.style.display = 'flex';
-            }
+        if (scoringControls && !modeBadge?.includes('Quick Study') && !modeBadge?.includes('Full Study')) {
+            scoringControls.style.display = 'block';
         }
     }
 }
 
+// Timer functionality for Timed Practice mode
+let timerInterval = null;
+let timeRemaining = 0;
+
+function initTimer() {
+    const timerElement = document.getElementById('timer');
+    if (timerElement && timerElement.textContent.includes('⏱️')) {
+        // Clear any existing timer
+        if (timerInterval) {
+            clearInterval(timerInterval);
+        }
+        
+        // Extract time from timer text (e.g., "⏱️ 10:00")
+        const timeText = timerElement.textContent.replace('⏱️ ', '');
+        const [minutes, seconds] = timeText.split(':');
+        timeRemaining = parseInt(minutes) * 60 + parseInt(seconds);
+        
+        // Start countdown
+        startTimer();
+    }
+}
+
+function startTimer() {
+    const timerElement = document.getElementById('timer');
+    if (!timerElement) return;
+    
+    timerInterval = setInterval(() => {
+        timeRemaining--;
+        
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            timeUp();
+            return;
+        }
+        
+        // Update display
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+        timerElement.textContent = `⏱️ ${minutes}:${seconds.toString().padStart(2, '0')}`;
+        
+        // Change color when time is running low
+        if (timeRemaining <= 60) {
+            timerElement.style.background = '#e74c3c';
+            timerElement.style.animation = 'pulse 1s infinite';
+        } else if (timeRemaining <= 300) { // 5 minutes
+            timerElement.style.background = '#f39c12';
+        }
+        
+    }, 1000);
+}
+
+function timeUp() {
+    alert('⏰ Time\'s up! Your timed practice session has ended.');
+    window.location.href = '/';
+}
+
+// Initialize timer when page loads
+document.addEventListener('DOMContentLoaded', initTimer);
+
+// Restart timer after HTMX updates (for card transitions)
+document.body.addEventListener('htmx:afterSwap', function(evt) {
+    // Only restart timer if we're in timed mode
+    if (evt.detail.target.id === 'flashcard-area') {
+        setTimeout(initTimer, 100); // Small delay to ensure DOM is ready
+    }
+});
+
 // Show next button after answering (for non-quick modes)
 document.body.addEventListener('htmx:afterRequest', function(evt) {
     if (evt.detail.elt.hasAttribute('hx-post') && evt.detail.elt.getAttribute('hx-post') === '/answer') {
-        const answerButtons = document.getElementById('answer-buttons');
-        const nextBtn = document.getElementById('next-btn');
+        const scoringControls = document.getElementById('scoring-controls');
         const stats = document.getElementById('stats');
         
-        if (answerButtons) answerButtons.style.display = 'none';
-        if (nextBtn) nextBtn.style.display = 'inline-block';
+        // Hide scoring controls after answering (user has made their choice)
+        if (scoringControls) scoringControls.style.display = 'none';
         if (stats) stats.style.display = 'block';
+        
+        // Navigation (Next button) is always visible, no need to show/hide
     }
 });
 </script>

@@ -1,5 +1,10 @@
 <div class="session-complete">
-    <h2>🎉 Study Session Complete!</h2>
+    {% if time_up %}
+        <h2>⏰ Time's Up!</h2>
+        <p class="time-up-message">Your timed practice session has ended.</p>
+    {% else %}
+        <h2>🎉 Study Session Complete!</h2>
+    {% endif %}
     
     <div class="final-stats">
         <div class="big-stat">

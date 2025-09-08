@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, session, jsonify
 import json
 import random
 import markdown
-from datetime import datetime
+from datetime import datetime, timedelta
 from flashcard_loader import load_all_flashcards, reload_flashcards
 
 app = Flask(__name__)
@@ -43,6 +43,23 @@ def markdown_filter(text):
 # Load flashcards from markdown files
 print("🚀 Loading DP-600 flashcards from markdown files...")
 FLASHCARDS = load_all_flashcards()
+
+def update_timer():
+    """Update the timer for timed practice mode"""
+    if session.get('study_mode') == 'timed' and 'time_remaining' in session:
+        # Calculate elapsed time since last update
+        current_time = datetime.now()
+        if 'last_timer_update' in session:
+            last_update = datetime.fromisoformat(session['last_timer_update'])
+            elapsed_seconds = int((current_time - last_update).total_seconds())
+            session['time_remaining'] = max(0, session['time_remaining'] - elapsed_seconds)
+        
+        # Update the last timer update time
+        session['last_timer_update'] = current_time.isoformat()
+        
+        # Check if time is up
+        if session['time_remaining'] <= 0:
+            session['time_remaining'] = 0
 
 @app.route('/')
 def index():
@@ -91,6 +108,7 @@ def start_session():
     elif mode == 'timed':
         # Use filtered cards (by topic if selected) with time tracking
         session['time_remaining'] = int(time_limit) * 60  # Convert to seconds
+        session['last_timer_update'] = datetime.now().isoformat()
     elif mode in ['full_study', 'flash_cards']:
         # Use filtered cards (by topic if selected)
         pass
@@ -115,6 +133,18 @@ def get_card_by_id(card_id):
 @app.route('/next-card')
 def get_next_card():
     print(f"DEBUG: get_next_card called - current_index: {session.get('current_card_index', 'None')}, total_cards: {len(session.get('shuffled_card_ids', []))}")
+    
+    # Update timer for timed mode
+    update_timer()
+    
+    # Check if time is up for timed mode
+    if session.get('study_mode') == 'timed' and session.get('time_remaining', 0) <= 0:
+        return render_template('session_complete.html', 
+                             score=session.get('score', 0),
+                             streak=session.get('streak', 0),
+                             cards_studied=session.get('cards_studied', 0),
+                             correct_answers=session.get('correct_answers', 0),
+                             time_up=True)
     
     if 'shuffled_card_ids' not in session or session['current_card_index'] >= len(session['shuffled_card_ids']):
         print(f"DEBUG: Session complete - showing completion screen for mode: {session.get('study_mode')}")
@@ -149,6 +179,35 @@ def next_card_review():
     if session.get('study_mode') in ['quick', 'full_study']:
         session['current_card_index'] += 1
         print(f"DEBUG: Advanced to card {session['current_card_index']} of {len(session.get('shuffled_card_ids', []))}")
+    
+    # Update timer for timed mode
+    update_timer()
+    
+    return get_next_card()
+
+@app.route('/prev-card-review', methods=['POST'])
+def prev_card_review():
+    """Go back to previous card in review modes (Quick Study, Full Study)"""
+    if session.get('study_mode') in ['quick', 'full_study']:
+        if session.get('current_card_index', 0) > 0:
+            session['current_card_index'] -= 1
+            print(f"DEBUG: Went back to card {session['current_card_index']} of {len(session.get('shuffled_card_ids', []))}")
+    
+    # Update timer for timed mode
+    update_timer()
+    
+    return get_next_card()
+
+@app.route('/prev-card')
+def prev_card():
+    """Go back to previous card in scoring modes"""
+    if session.get('current_card_index', 0) > 0:
+        session['current_card_index'] -= 1
+        print(f"DEBUG: Went back to card {session['current_card_index']} of {len(session.get('shuffled_card_ids', []))}")
+    
+    # Update timer for timed mode
+    update_timer()
+    
     return get_next_card()
 
 @app.route('/answer', methods=['POST'])
