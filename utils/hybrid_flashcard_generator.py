@@ -160,57 +160,43 @@ def analyze_content_structure(text):
 def create_enhanced_prompt(text, analysis):
     """Create optimized prompt with rule-based analysis context"""
     
-    prompt = f"""Create high-quality DP-600 exam flashcards from this Microsoft Fabric study material.
+    prompt = f"""You are creating DP-600 exam flashcards. Follow this format EXACTLY:
 
-CONTENT ANALYSIS:
-- Primary Topic: {analysis['primary_topic']}
-- Content Type: {analysis['content_type']} 
-- Difficulty Level: {analysis['difficulty_indicators'][0] if analysis['difficulty_indicators'] else 'intermediate'}
-- Key Technologies: {', '.join(analysis['technical_terms'][:5])}
-
-EXAM FOCUS AREAS:
-Create questions that test practical knowledge for the Microsoft DP-600 exam:
-- Real-world scenarios and implementation decisions
-- Key differences between similar technologies/approaches  
-- Best practices and common pitfalls
-- Step-by-step procedures when applicable
-- Troubleshooting and problem-solving
-
-EXACT FORMAT REQUIRED:
 ### Card 1
-**Q:** [Exam-style question focusing on practical application]
-**A:** [Detailed answer with proper formatting]
-- Use bullet points for multi-step processes
-- **Bold** important terms and concepts
-- `Code blocks` for technical terms, SQL, DAX, commands
-- Include specific examples from the content
+**Q:** How do you configure Microsoft Fabric workspace security?
+**A:** To configure workspace security:
+- Navigate to **Workspace settings**
+- Set **Role-based access** permissions
+- Configure `Row-Level Security (RLS)` for datasets
+- Enable **Azure AD integration**
 
-**Difficulty:** Basic|Intermediate|Advanced
-**Tags:** dp-600, exam, [relevant-topic-tags]
+**Difficulty:** Intermediate
+**Tags:** dp-600, security, workspace
 
 ---
 
 ### Card 2
-**Q:** [Next question]
-**A:** [Formatted answer]
+**Q:** What are the key differences between Lakehouse and Warehouse in Fabric?
+**A:** Key differences:
+- **Lakehouse**: Supports both structured and unstructured data
+- **Warehouse**: Optimized for structured data and SQL queries
+- **Storage**: Lakehouse uses `Delta Lake` format
+- **Performance**: Warehouse provides faster analytical queries
 
-**Difficulty:** [Level]
-**Tags:** [relevant, tags]
+**Difficulty:** Basic
+**Tags:** dp-600, lakehouse, warehouse
 
 ---
 
-REQUIREMENTS:
-- Generate 8-12 high-quality flashcards
-- Focus on exam-relevant scenarios, not just definitions
-- Questions should test understanding and application
-- Use the technical terms identified: {', '.join(analysis['technical_terms'])}
-- Each card MUST end with --- separator
-- Ensure answers are detailed enough for effective study
+Now create 8-10 similar flashcards from this content:
 
-STUDY MATERIAL:
-{text}
+TOPIC: {analysis['primary_topic']}
+KEY TERMS: {', '.join(analysis['technical_terms'][:5])}
 
-Generate the flashcards now:"""
+CONTENT:
+{text[:2000]}
+
+Remember: Use **Q:** and **A:** exactly as shown in the examples above. Each card must end with ---"""
     
     return prompt
 
@@ -322,17 +308,46 @@ def validate_and_clean_flashcards(llm_output):
     if not llm_output:
         return []
     
-    # Split into individual cards
-    cards = llm_output.split('---')
+    # First, try to convert Front/Back format to Q/A format
+    llm_output = llm_output.replace('**Front:**', '**Q:**')
+    llm_output = llm_output.replace('**Back:**', '**A:**')
+    
+    # Split into individual cards - try multiple separators
+    if '---' in llm_output:
+        cards = llm_output.split('---')
+    elif '**Card' in llm_output:
+        # Split on Card headers
+        parts = re.split(r'\*\*Card \d+\*\*', llm_output)
+        cards = [part for part in parts if part.strip()]
+    else:
+        # Try to identify cards by Q:/A: patterns
+        card_pattern = r'(\*\*Q:\*\*.*?\*\*A:\*\*.*?)(?=\*\*Q:\*\*|$)'
+        cards = re.findall(card_pattern, llm_output, re.DOTALL)
+    
     validated_cards = []
     
     for i, card in enumerate(cards, 1):
-        card = card.strip()
-        if not card:
+        try:
+            if isinstance(card, tuple):
+                card = card[0]
+            card = str(card).strip()
+            if not card:
+                continue
+            
+            # Check for required format (flexible matching)
+            has_question = any(marker in card for marker in ['**Q:**', '**Front:**', 'Q:', 'Front:'])
+            has_answer = any(marker in card for marker in ['**A:**', '**Back:**', 'A:', 'Back:'])
+        except Exception as e:
+            print(f"   ⚠️ Error processing card {i}: {e}")
             continue
         
-        # Check for required format
-        if '**Q:**' in card and '**A:**' in card:
+        if has_question and has_answer:
+            
+            # Convert any remaining Front/Back to Q/A (handle all variations)
+            card = card.replace('**Front:**', '**Q:**')
+            card = card.replace('**Back:**', '**A:**')
+            card = card.replace('Front:', '**Q:**')
+            card = card.replace('Back:', '**A:**')
             
             # Ensure proper card numbering
             if not card.startswith('### Card'):
@@ -340,7 +355,7 @@ def validate_and_clean_flashcards(llm_output):
             
             # Ensure difficulty and tags are present
             if '**Difficulty:**' not in card:
-                card += "\n**Difficulty:** Intermediate"
+                card += "\n\n**Difficulty:** Intermediate"
             
             if '**Tags:**' not in card:
                 card += "\n**Tags:** dp-600, exam"
@@ -365,7 +380,8 @@ def save_flashcards(flashcards, folder, filename):
     output_file = content_dir / filename
     
     # Create file header
-    header = f"""# DP-600 Flashcards - {filename.stem.replace('-', ' ').title()}
+    filename_path = Path(filename) if isinstance(filename, str) else filename
+    header = f"""# DP-600 Flashcards - {filename_path.stem.replace('-', ' ').title()}
 
 Generated: {datetime.now().strftime("%Y-%m-%d %H:%M")}
 Source: Hybrid LLM + Rule-based Generator
@@ -450,9 +466,24 @@ def main():
             print("   ❌ Failed to generate flashcards")
             continue
         
+        # Debug: Show first part of LLM output
+        print(f"   🔍 LLM output preview: {llm_output[:200]}...")
+        
         # 5. Validate and clean output
         print("   ✅ Validating flashcard format...")
         flashcards = validate_and_clean_flashcards(llm_output)
+        
+        if not flashcards:
+            print(f"   🔍 Debug: Raw LLM output length: {len(llm_output)}")
+            print(f"   🔍 Looking for Q: and A: in output...")
+            if '**Q:**' in llm_output:
+                print("   ✅ Found **Q:** in output")
+            else:
+                print("   ❌ Missing **Q:** in output")
+            if '**A:**' in llm_output:
+                print("   ✅ Found **A:** in output") 
+            else:
+                print("   ❌ Missing **A:** in output")
         
         if not flashcards:
             print("   ❌ No valid flashcards generated")

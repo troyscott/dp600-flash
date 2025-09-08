@@ -1,14 +1,17 @@
 # DP-600 Study App
 
-A gamified flashcard app for Microsoft Fabric Analytics Engineer (DP-600) certification study.
+A comprehensive gamified flashcard app for Microsoft Fabric Analytics Engineer (DP-600) certification study with AI-powered content generation.
 
-## Features
+## 🚀 Features
 
-- **Multiple Study Modes**: Topic Focus, Timed Practice, Quick Study, Full Study
-- **Gamification**: Scoring, streaks, progress tracking  
-- **Markdown-based Content**: Easy to create and manage flashcards
-- **PDF Splitter Utility**: Break down large study materials for AI processing
-- **Responsive Design**: Works on desktop and mobile
+- **5 Study Modes**: Topic Focus, Quick Study, Timed Practice, Full Study, Flash Cards
+- **AI-Powered Content Generation**: Hybrid LLM + rule-based flashcard generation
+- **Smart Content Analysis**: Auto-categorizes content into DP-600 exam objectives
+- **PDF Processing Pipeline**: Split PDFs → Generate flashcards → Study immediately
+- **Gamification**: Scoring, streaks, progress tracking with session management
+- **Markdown-based Content**: Easy to create, edit, and manage flashcards
+- **Responsive Design**: Works seamlessly on desktop and mobile
+- **Local & Cloud LLM Support**: Use Ollama (free) or cloud APIs for best quality
 
 ## Quick Start
 
@@ -35,46 +38,51 @@ content/
 └── 03-semantic-models/
 ```
 
-### Adding New Flashcards
+### Adding New Flashcards - Complete Automated Workflow
 
-**Option 1: Use Claude Desktop**
-1. Use the PDF splitter utility: `python utils/pdf_splitter.py input/study_guide.pdf`
-2. Upload chunks to Claude Desktop with this prompt:
+**🏆 Recommended: Hybrid AI Generation (Best Quality)**
+1. **Split PDFs**: `python utils/simple_pdf_splitter.py "path/to/study_guide.pdf"`
+2. **Setup LLM** (one-time):
+   ```bash
+   # Install Ollama (free local LLM)
+   winget install ollama
+   ollama serve
+   ollama pull llama3.2:3b
    ```
-   Create DP-600 flashcards using this format:
-   
-   **Q:** [question]
-   **A:** [answer]
-   
-   Separate each card with ---
-   ```
-3. Save the output as `.md` files in appropriate `content/` subdirectories
-4. Visit `/admin/reload-flashcards` to load new content
+3. **Generate flashcards**: `python utils/hybrid_flashcard_generator.py`
+4. **Load into app**: Visit `/admin/reload-flashcards`
 
-**Option 2: Manual Creation**
-1. Create `.md` files in `content/` subdirectories
-2. Follow the format in `content/README.md`
-3. Use `---` separators between cards
-4. Reload at `/admin/reload-flashcards`
+**Alternative: Rule-based Generation (No LLM needed)**
+1. Split PDFs as above
+2. Run: `python utils/automated_flashcard_generator.py` 
+3. Load into app as above
 
-## Study Modes
+**Manual Creation**
+1. Create `.md` files in `content/` subdirectories following the Q:/A: format
+2. Separate cards with `---`
+3. Reload at `/admin/reload-flashcards`
 
-- **Topic Focus**: Study specific exam areas (Maintain, Prepare Data, Semantic Models)
-- **Timed Practice**: Exam simulation with time pressure (5/10/15 minutes)  
-- **Quick Study**: Stress-free review mode (5/10 cards, no scoring)
-- **Full Study**: Complete session with all flashcards and scoring
+## 📚 Study Modes
 
-## PDF Splitter Utility
+- **Topic Focus**: Study specific DP-600 exam areas with scoring and streaks
+- **Quick Study**: Stress-free review mode (5/10 cards, no scoring/timing)  
+- **Timed Practice**: Exam simulation with time pressure (5/10/15 minutes)
+- **Full Study**: Complete session through all available flashcards
+- **Flash Cards**: Full gamified experience with correct/incorrect tracking
 
-Located in `utils/` - splits large PDF study materials into chunks for AI processing:
+## 🛠️ Utilities
 
-```bash
-cd utils
-pip install -r requirements.txt
-python pdf_splitter.py input/large_study_guide.pdf
-```
+### AI Flashcard Generation
+- **`hybrid_flashcard_generator.py`** - Best quality using LLM + rule-based analysis
+- **`automated_flashcard_generator.py`** - Rule-based generation (no LLM required)
+- **`claude_desktop_prompts.md`** - Manual prompt kit for Claude Desktop
 
-See `utils/README.md` for details.
+### PDF Processing
+- **`simple_pdf_splitter.py`** - Splits PDFs into 30-page chunks
+- **`pdf_splitter.py`** - Size-based splitting (legacy)
+
+### Setup Guides  
+- **`setup_llm.md`** - Complete LLM setup guide (Ollama, OpenAI, Anthropic)
 
 ## Development
 
@@ -82,15 +90,32 @@ See `utils/README.md` for details.
 - **Debug**: Set `debug=True` in `app.py`
 - **Add content**: Edit markdown files in `content/`
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 dp600-flash/
-├── app.py                 # Main Flask application
-├── flashcard_loader.py    # Markdown parser
-├── templates/             # HTML templates  
-├── static/               # CSS and assets
-├── content/              # Flashcard markdown files
-├── utils/                # PDF splitter utility
-└── README.md             # This file
+├── app.py                          # Main Flask application
+├── flashcard_loader.py             # Markdown parser & content loader
+├── templates/                      # HTML templates (Jinja2)
+│   ├── base.html                  # Base template
+│   ├── home.html                  # Study mode selection
+│   └── flashcard.html             # Card display & interaction
+├── static/
+│   └── style.css                  # Responsive CSS with markdown styling
+├── content/                       # Flashcard markdown files
+│   ├── 01-maintain-analytics-solution/
+│   ├── 02-prepare-data/ 
+│   └── 03-semantic-models/
+├── utils/                         # AI generation & PDF processing utilities
+│   ├── hybrid_flashcard_generator.py    # Best quality AI generation
+│   ├── automated_flashcard_generator.py # Rule-based generation
+│   ├── simple_pdf_splitter.py           # PDF chunking utility
+│   ├── claude_desktop_prompts.md        # Manual prompt kit
+│   └── setup_llm.md                     # LLM setup guide
+├── requirements.txt               # Python dependencies
+└── README.md                      # This documentation
 ```
+
+## 🎯 Perfect for DP-600 Exam Prep
+
+This app is specifically designed for the **Microsoft DP-600: Implementing Analytics Solutions Using Microsoft Fabric** certification exam, with content automatically organized by exam objectives and optimized study modes for effective learning and retention.
