@@ -1,86 +1,124 @@
 # DP-600 Flashcards - Dp600_Flashcards_Chunk_11
 
-Generated: 2025-09-08 01:05
+Generated: 2025-09-08 20:29
 Source: Hybrid LLM + Rule-based Generator
 
-### Card 3
-**Q:** What is the purpose of a Semantic Model in Power BI?
-**A:** A Semantic Model defines how data in a report is structured, including relationships between tables and fields.
+### Card 1
+**Q:** How do you use calculation groups in DAX to apply time intelligence logic?
+**A:** To apply time intelligence logic using a calculation group:
+- Create a measure: `Quantity MTD = CALCULATE([Total Quantity], 'Time Intelligence'[Period] = "MTD")`
+- Ensure the measure uses the correct calculation item from the Time Intelligence group.
+- Avoid directly applying filters to measures like `SUM(Sale[Quantity])` without using a calculation item.
 
-**Difficulty:** Basic
-**Tags:** dp-600, semantic model, power bi
+**Difficulty:** Intermediate
+**Tags:** dp-600, dax, semantic-model
+
+---
+
+### Card 2
+**Q:** What is the purpose of dynamic strings in DAX?
+**A:** Dynamic strings allow you to change formatting dynamically based on measure values:
+- Set the format property to Dynamic.
+- Use expressions like `VAR CurrentValue = SELECTEDMEASURE()`.
+- Format numbers conditionally, e.g., adding a "K" suffix for large values.
+
+**Difficulty:** Intermediate
+**Tags:** dp-600, dax, dynamic-formatting
+
+---
+
+### Card 3
+**Q:** How do you create and apply field parameters in Power BI reports?
+**A:** To enable slicer-based switching between fields:
+1. Create a parameter or measure that defines the field.
+2. Use this parameter to filter data dynamically through slicers.
+3. Adjust report visuals based on the selected slicer value.
+
+**Difficulty:** Intermediate
+**Tags:** dp-600, power-bi, semantic-model
 
 ---
 
 ### Card 4
-**Q:** How do you create a Star Schema for a Semantic Model?
-**A:** To create a Star Schema:
-- Identify key facts (Fact table)
-- Define dimensions (Dimension tables) with related attributes
-- Establish relationships between Fact and Dimension tables
+**Q:** What is a star schema and how does it relate to Power BI?
+**A:** Star Schema:
+- Central fact table surrounded by dimension tables.
+- Simplifies data modeling for business intelligence.
+- In Power BI: helps in creating efficient queries and reports.
 
-**Difficulty:** Intermediate
-**Tags:** dp-600, star schema, semantic model
+**Difficulty:** Basic
+**Tags:** dp-600, semantic-model, star-schema
 
 ---
 
 ### Card 5
-**Q:** What is the purpose of DAX in Power BI?
-**A:** DAX (Data Analysis Expressions) is a formula language used to create measures and calculations in Power BI.
+**Q:** What are the benefits of using a semantic model over traditional SQL queries?
+**A:** Semantic Model Benefits:
+- Optimized for OLAP (Online Analytical Processing).
+- Provides advanced data aggregation and filtering.
+- Enhances performance through pre-calculated measures and dimensions.
 
 **Difficulty:** Basic
-**Tags:** dp-600, dax, power bi
+**Tags:** dp-600, semantic-model, olap
 
 ---
 
 ### Card 6
-**Q:** How do you use calculation groups in DAX?
-**A:** To use calculation groups:
-- Create a calculation group with related measures and fields
-- Apply filters to the calculation group using DAX functions (e.g., CALCULATE)
+**Q:** How do you manage permissions in a Power BI semantic model?
+**A:** To manage permissions:
+1. Define roles with specific access levels.
+2. Assign these roles to users or groups.
+3. Use DAX expressions for advanced filtering and security measures.
 
 **Difficulty:** Intermediate
-**Tags:** dp-600, calculation group, dax
+**Tags:** dp-600, power-bi, security
 
 ---
 
 ### Card 7
-**Q:** What is dynamic string formatting in Power BI?
-**A:** Dynamic string formatting allows you to change the format of a measure without creating a calculation group.
+**Q:** What is a calculation group in Power BI and how does it work?
+**A:** Calculation Group:
+- A set of related calculations.
+- Used to apply consistent time intelligence or other analytical logic across measures.
+- Enhances reusability and maintainability.
 
-**Difficulty:** Basic
-**Tags:** dp-600, dynamic string, power bi
+**Difficulty:** Intermediate
+**Tags:** dp-600, dax, semantic-model
 
 ---
 
 ### Card 8
-**Q:** How do you design field parameters for slicers in Power BI?
-**A:** To design field parameters:
-- Identify fields that should be included as slicer options
-- Use the Power BI Desktop or Tabular Editor to create slicer fields
+**Q:** How do you implement dynamic formatting in Power BI using DAX?
+**A:** Dynamic Formatting Steps:
+1. Use the Format property to set a measure's format as Dynamic.
+2. Define logic for conditional formatting within DAX expressions.
+3. Utilize functions like `SELECTEDMEASURE()` for context-based formatting.
 
 **Difficulty:** Intermediate
-**Tags:** dp-600, slicer, power bi
+**Tags:** dp-600, dax, dynamic-formatting
 
 ---
 
 ### Card 9
-**Q:** What is a Star Schema in a Semantic Model?
-**A:** A Star Schema consists of a Fact table with related Dimension tables.
+**Q:** What role does the Warehouse play in a semantic model compared to the Lakehouse?
+**A:** In Semantic Models:
+- **Warehouse**: Optimized SQL querying and transactional operations.
+- **Lakehouse**: Supports unstructured data alongside structured data for analytics.
 
 **Difficulty:** Basic
-**Tags:** dp-600, star schema, semantic model
+**Tags:** dp-600, warehouse, lakehouse
 
 ---
 
 ### Card 10
-**Q:** How do you create measures using DAX formulas?
-**A:** To create measures:
-- Use DAX functions (e.g., SUM, AVERAGE) to calculate values
-- Apply filters and conditions as needed
+**Q:** How do you use DAX to enhance the performance of a Power BI semantic model?
+**A:** Enhancing Performance:
+- Use efficient DAX functions and patterns.
+- Implement proper indexing and partitioning for large datasets.
+- Leverage calculation groups for consistent time intelligence calculations.
 
 **Difficulty:** Intermediate
-**Tags:** dp-600, dax, measure
+**Tags:** dp-600, dax, performance
 
 ---
 

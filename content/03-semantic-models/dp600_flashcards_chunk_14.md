@@ -1,106 +1,131 @@
 # DP-600 Flashcards - Dp600_Flashcards_Chunk_14
 
-Generated: 2025-09-08 01:05
+Generated: 2025-09-08 20:32
 Source: Hybrid LLM + Rule-based Generator
 
-### Card 1
-Here are 10 DP-600 exam flashcards on Semantic Modeling:
-
-### Card 1
-**Q:** What is the purpose of a shared semantic model in Microsoft Fabric?
-**A:** A shared semantic model enables multiple workspaces to share common data models, reducing data duplication and improving collaboration.
-**Difficulty:** Basic
-**Tags:** dp-600, semantic modeling, fabric
-
----
-
-### Card 2
-**Q:** How do you create a dynamic RLS (row-level security) policy in Fabric?
-**A:** To create a dynamic RLS policy:
-- Navigate to **Workspace settings**
-- Click on **Row-Level Security**
-- Select the dataset(s) to apply RLS
-- Configure filter parameters and conditions
-**Difficulty:** Intermediate
-**Tags:** dp-600, row-level security, fabric
-
----
-
 ### Card 3
-**Q:** What is the difference between a DAX formula and a Power BI formula?
-**A:** A DAX (Data Analysis Expressions) formula is used in Power BI to perform calculations and data analysis, while a Power BI formula is a more general term that can be used for various purposes.
+**Q:** What is the purpose of Semantic Modeling in Microsoft Fabric?
+**A:** Semantic modeling in Microsoft Fabric serves to:
+- Define a business-oriented layer over raw data
+- Enhance query performance and scalability
+- Provide a consistent and secure way for users to interact with data
+
 **Difficulty:** Basic
-**Tags:** dp-600, dax, power bi
+**Tags:** dp-600, semantic-modeling, fabric
 
 ---
 
 ### Card 4
-**Q:** How do you optimize query performance using an enterprise-scale semantic model in Fabric?
-**A:** To optimize query performance:
-- Analyze and understand the data usage patterns
-- Optimize data models and schema
-- Use caching and indexing
-- Apply dynamic RLS policies
-**Difficulty:** Intermediate
-**Tags:** dp-600, semantic modeling, fabric
+**Q:** How do you create explicit measures in Power BI?
+**A:** To create explicit measures:
+1. Open the **Modeling** tab
+2. Click on **New Measure**
+3. Use DAX formulas to define calculations explicitly
+
+**Difficulty:** Basic
+**Tags:** dp-600, power-bi, semantic-modeling
 
 ---
 
 ### Card 5
-**Q:** What is the purpose of the FILTER function in Fabric?
-**A:** The FILTER function allows you to filter data from disconnected tables or datasets.
-**Difficulty:** Basic
-**Tags:** dp-600, filter function, fabric
+**Q:** What is Row-Level Security (RLS) in Microsoft Fabric?
+**A:** RLS in Microsoft Fabric:
+- Enables filtering of data based on user roles or groups
+- Enhances security by restricting access to sensitive data
+- Can be configured via the workspace settings and datasets
+
+**Difficulty:** Intermediate
+**Tags:** dp-600, rls, fabric-security
 
 ---
 
 ### Card 6
-**Q:** How do you extend a table using Microsoft Fabric?
-**A:** To extend a table:
-- Navigate to **Workspace settings**
-- Click on **Tables**
-- Select the table to extend
-- Add new columns or modify existing ones
-**Difficulty:** Basic
-**Tags:** dp-600, tables, fabric
+**Q:** How does Lakehouse differ from Warehouse in terms of storage?
+**A:** Key differences:
+- **Lakehouse**: Utilizes Delta Lake for efficient data management
+- **Warehouse**: Typically uses traditional database formats like SQL Server or PostgreSQL
 
----
-
-### Card 7
-**Q:** What is the difference between Lakehouse and Warehouse in Fabric?
-**A:** Lakehouse supports both structured and unstructured data, while Warehouse is optimized for structured data and SQL queries.
 **Difficulty:** Basic
 **Tags:** dp-600, lakehouse, warehouse
 
 ---
 
+### Card 7
+**Q:** What is the role of OneLake in Microsoft Fabric?
+**A:** OneLake acts as:
+- A central repository for data
+- An integrated platform combining features from Lakehouse and Warehouse
+- The foundation for semantic modeling and analytics in Fabric
+
+**Difficulty:** Basic
+**Tags:** dp-600, onelake, fabric
+
+---
+
 ### Card 8
-**Q:** How do you create a new dataset using the dtypes() function in Fabric?
-**A:** To create a new dataset:
-- Use the `dtypes()` function to define data types
-- Apply data validation rules
-- Configure data formats and encoding
-**Difficulty:** Intermediate
-**Tags:** dp-600, datasets, fabric
+**Q:** What is the purpose of Direct Lake in Power BI?
+**A:** Direct Lake allows:
+- Real-time data access from Azure Data Lake Storage Gen2
+- Efficient querying and analytics without extracting data into local files
+
+**Difficulty:** Basic
+**Tags:** dp-600, power-bi, direct-lake
 
 ---
 
 ### Card 9
-**Q:** What is the purpose of the Except function in Fabric?
-**A:** The Except function returns all rows from a table that do not match the specified filter conditions.
+**Q:** How does DISTINCTCOUNT work in DAX?
+**A:** DISTINCTCOUNT:
+- Counts the number of distinct items in a column or table
+- Example: `DISTINCTCOUNT(Sales[ProductID])` counts unique product IDs
+
 **Difficulty:** Basic
-**Tags:** dp-600, except function, fabric
+**Tags:** dp-600, dax, functions
 
 ---
 
 ### Card 10
-**Q:** How do you create a dynamic string in Power BI using the dynamic RLS feature?
-**A:** To create a dynamic string:
-- Use the `dynamic strings` feature in **Workspace settings**
-- Configure filter parameters and conditions
-- Apply dynamic strings to reports or dashboards
+**Q:** What is the difference between EXCEPT and DISTINCT?
+**A:** Key differences:
+- **EXCEPT**: Returns a table that contains rows from one dataset but not another
+- **DISTINCT**: Removes duplicate values within a single column or expression
+
+**Difficulty:** Basic
+**Tags:** dp-600, dax, functions
+
+---
+
+### Card 11
+**Q:** How do you optimize query and report performance in an enterprise-scale semantic model?
+**A:** Optimization strategies:
+- Use indexed columns for faster querying
+- Limit data retrieval to necessary fields
+- Implement caching mechanisms where possible
+
 **Difficulty:** Intermediate
-**Tags:** dp-600, dynamic strings, fabric
+**Tags:** dp-600, optimization, semantic-modeling
+
+---
+
+### Card 12
+**Q:** What is the role of dynamic RLS in Microsoft Fabric?
+**A:** Dynamic Row-Level Security (RLS):
+- Adjusts data access based on real-time conditions or user attributes
+- Enhances security and compliance by dynamically filtering datasets
+
+**Difficulty:** Intermediate
+**Tags:** dp-60 IF NOT PROVIDED: Skip this card as it may not fit the provided context.
+
+---
+
+### Card 13
+**Q:** What is a shared semantic model in Microsoft Fabric?
+**A:** A shared semantic model:
+- Allows multiple workspaces to use the same data model definition
+- Facilitates consistent and centralized management of business logic
+
+**Difficulty:** Basic
+**Tags:** dp-600, fabric, semantic-modeling
 
 ---
 

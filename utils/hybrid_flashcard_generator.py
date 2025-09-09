@@ -17,11 +17,12 @@ from datetime import datetime
 # Configuration
 CONFIG = {
     "llm_provider": "ollama",  # Options: "ollama", "openai", "anthropic"
-    "model": "llama3.2:3b",    # Ollama models: llama3.2:3b, qwen2.5:7b, etc.
+    "model": "qwen2.5:14b",    # Updated to use the better model
     "api_key": "",             # Only needed for cloud providers
     "ollama_url": "http://localhost:11434",
     "max_cards_per_chunk": 12,
-    "min_content_length": 500
+    "min_content_length": 500,
+    "cleanup_before_generation": True  # Clear existing flashcard files before generating new ones
 }
 
 
@@ -397,11 +398,48 @@ Source: Hybrid LLM + Rule-based Generator
     return output_file
 
 
+def cleanup_existing_flashcards():
+    """Remove existing flashcard files to ensure fresh generation"""
+    script_dir = Path(__file__).parent.parent
+    content_dir = script_dir / "content"
+    
+    if not content_dir.exists():
+        return
+    
+    folders_to_clean = [
+        "01-maintain-analytics-solution",
+        "02-prepare-data", 
+        "03-semantic-models"
+    ]
+    
+    total_removed = 0
+    for folder_name in folders_to_clean:
+        folder_path = content_dir / folder_name
+        if folder_path.exists():
+            # Remove all .md files in this folder
+            md_files = list(folder_path.glob("*.md"))
+            for md_file in md_files:
+                try:
+                    md_file.unlink()
+                    total_removed += 1
+                except Exception as e:
+                    print(f"   ⚠️ Could not remove {md_file.name}: {e}")
+    
+    if total_removed > 0:
+        print(f"🧹 Cleaned up {total_removed} existing flashcard files")
+    else:
+        print("🧹 No existing flashcard files to clean")
+
+
 def main():
     print("🚀 Hybrid DP-600 Flashcard Generator (Best Quality)")
     print("=" * 60)
     print(f"🤖 LLM Provider: {CONFIG['llm_provider']}")
     print(f"📊 Model: {CONFIG['model']}")
+    
+    # Cleanup existing flashcard files if requested
+    if CONFIG.get("cleanup_before_generation", False):
+        cleanup_existing_flashcards()
     
     # Check LLM availability
     if CONFIG['llm_provider'] == 'ollama':

@@ -1,115 +1,125 @@
 # DP-600 Flashcards - Dp600_Flashcards_Chunk_05
 
-Generated: 2025-09-08 01:04
+Generated: 2025-09-08 20:23
 Source: Hybrid LLM + Rule-based Generator
 
+### Card 1
+**Q:** How do you create stored procedures in Microsoft Fabric?
+**A:** To create stored procedures:
+- Navigate to `SQL endpoint` or `Warehouse Explorer`
+- Use T-SQL commands like `CREATE PROCEDURE`
+- Can also use Azure Data Studio or SQL Management Studio for templates
+
+**Difficulty:** Intermediate  
+**Tags:** dp-600, stored-procedures, sql-endpoint
+
+---
+
+### Card 2
+**Q:** What are the steps to enrich data using Microsoft Fabric?
+**A:** To enrich data:
+- Use `Ingest Items` and T-SQL in Microsoft Fabric
+- Add new columns or modify existing ones via SQL queries
+- For Lakehouse Explorer: Edit Delta tables’ schema with notebooks or SparkJobs
+
+**Difficulty:** Intermediate  
+**Tags:** dp-600, data-preparation, enrichment
+
+---
+
 ### Card 3
-**Q:** How do you add a new column to a DataFrame in Lakehouse using the `withColumn()` function?
-**A:** To add a new column:
-- Use the `withColumn()` function
-- Pass the new column name and data type as arguments
-- The function returns a new DataFrame with the added column
+**Q:** How can you extend DataFrame schemas in Microsoft Fabric?
+**A:** To extend DataFrame schemas:
+- Use `withColumn()` to add new columns or modify existing ones
+- Utilize `select()` to rename, retyping columns, and apply functions like `explode()`
+- Works within notebooks for Delta tables
 
-Example: `df = df.withColumn("new_column", lit("value"))`
-
-**Difficulty:** Basic
-**Tags:** lakehouse, data preparation
+**Difficulty:** Basic  
+**Tags:** dp-600, dataframe, schema-extension
 
 ---
 
 ### Card 4
-**Q:** What is the purpose of Delta Lake in Microsoft Fabric?
-**A:** Delta Lake is a format used in Lakehouse that enables:
-- Efficient storage and retrieval of data
-- Incremental updates and versioning
-- Support for ACID transactions
+**Q:** What are the limitations of altering table schemas in Microsoft Fabric's Warehouse Explorer?
+**A:** Limitations:
+- Cannot use T-SQL `ALTER TABLE ADD COLUMN`
+- Need to delete and recreate tables for adding columns
+- Use Lakehouse Explorer with notebooks or SparkJobs instead
 
-It provides a more efficient way to store data compared to traditional formats.
-
-**Difficulty:** Basic
-**Tags:** lakehouse, delta lake
+**Difficulty:** Basic  
+**Tags:** dp-600, warehouse-explorer, limitations
 
 ---
 
 ### Card 5
-**Q:** How do you modify an existing table in Warehouse using T-SQL?
-**A:** Due to limitations in Warehouse Explorer and SQL endpoint:
-- You cannot use `ALTER TABLE ADD COLUMN`
-- Instead, delete the table and create it again with the desired columns
+**Q:** How does OneLake enhance data integration in Microsoft Fabric?
+**A:** OneLake:
+- Unifies storage for both structured and unstructured data
+- Streamlines data movement between Lakehouse and Warehouse
+- Simplifies data governance across different environments
 
-However, within Lakehouse Explorer, you can edit Delta tables schema using notebooks or SparkJobs.
-
-**Difficulty:** Intermediate
-**Tags:** warehouse, t-sql
+**Difficulty:** Intermediate  
+**Tags:** dp-600, onelake, data-integration
 
 ---
 
 ### Card 6
-**Q:** What is OneLake in Microsoft Fabric?
-**A:** OneLake is a unified data framework that integrates:
-- Data Factory
-- Lakehouse
-- Warehouse
-- Fabric
-It enables seamless data preparation, transformation, and analysis across all these components.
+**Q:** What are the key differences between a Data Factory and Microsoft Fabric?
+**A:** Key differences:
+- **Data Factory**: Centralized platform for ETL/ELT processes
+- **Microsoft Fabric**: End-to-end analytics solution including Lakehouse/Warehouse
+- **Use Case**: Data Factory focuses on data integration, while Fabric covers broader analytics needs
 
-**Difficulty:** Basic
-**Tags:** onelake, microsoft fabric
+**Difficulty:** Basic  
+**Tags:** dp-600, data-factory, microsoft-fabric
 
 ---
 
 ### Card 7
-**Q:** How do you create a stored procedure in Microsoft Fabric using T-SQL?
-**A:** To create a stored procedure:
-- Open the T-SQL editor
-- Use the `CREATE PROCEDURE` statement
-- Define the procedure name and body
-- Execute the procedure to test it
+**Q:** How do you create a view in Microsoft Fabric's Warehouse Explorer?
+**A:** To create a view:
+- Use `SQL endpoint` or `Warehouse Explorer`
+- Write T-SQL `CREATE VIEW` statement
+- Utilize Azure Data Studio or SQL Management Studio templates for assistance
 
-Example: `CREATE PROCEDURE my_procedure AS SELECT * FROM table_name;`
-
-**Difficulty:** Intermediate
-**Tags:** t-sql, stored procedures
+**Difficulty:** Basic  
+**Tags:** dp-600, warehouse-explorer, views
 
 ---
 
 ### Card 8
-**Q:** What is the main difference between Lakehouse and Warehouse in Microsoft Fabric?
-**A:** The primary difference lies in their data storage and query capabilities:
-- Lakehouse supports both structured and unstructured data
-- Warehouse optimizes for structured data and SQL queries
+**Q:** What are the advantages of using Delta Lake in Microsoft Fabric's Lakehouse?
+**A:** Advantages:
+- Supports both ACID transactions and schema evolution
+- Enables efficient storage and querying for large datasets
+- Provides snapshot isolation to ensure data consistency
 
-Choose the right one based on your data type and query requirements.
-
-**Difficulty:** Basic
-**Tags:** lakehouse, warehouse
+**Difficulty:** Intermediate  
+**Tags:** dp-600, delta-lake, lakehouse
 
 ---
 
 ### Card 9
-**Q:** How do you connect to a Workspace in Microsoft Fabric using Azure Data Studio or SQL Management Studio?
-**A:** To connect:
-- Open Azure Data Studio or SQL Management Studio
-- Select the workspace and data item
-- Use the provided templates for creating views, functions, and stored procedures
+**Q:** How can you manage security in Microsoft Fabric's Data Factory?
+**A:** To manage security:
+- Use **Azure Active Directory (AAD) integration**
+- Configure role-based access control (RBAC)
+- Utilize secure connection management for data sources
 
-These tools provide a seamless experience for working with Microsoft Fabric workspaces.
-
-**Difficulty:** Intermediate
-**Tags:** azure data studio, sql management studio
+**Difficulty:** Intermediate  
+**Tags:** dp-600, security, data-factory
 
 ---
 
 ### Card 10
-**Q:** What is the purpose of `Row-Level Security (RLS)` in Microsoft Fabric?
-**A:** RLS enables fine-grained access control to data:
-- It enforces permissions based on row-level security policies
-- It ensures that users only access authorized rows and columns
+**Q:** What are the steps to migrate a dataset from Data Factory to Microsoft Fabric's Lakehouse?
+**A:** To migrate:
+- Use **Data Factory’s Copy Activity**
+- Specify source and sink datasets in Microsoft Fabric's Lakehouse
+- Ensure compatibility with Delta Lake format for seamless integration
 
-This feature enhances data security and privacy within workspaces.
-
-**Difficulty:** Intermediate
-**Tags:** rls, row-level security
+**Difficulty:** Intermediate  
+**Tags:** dp-600, migration, lakehouse
 
 ---
 

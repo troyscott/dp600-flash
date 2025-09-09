@@ -1,98 +1,108 @@
 # DP-600 Flashcards - Dp600_Flashcards_Chunk_13
 
-Generated: 2025-09-08 01:05
+Generated: 2025-09-08 20:31
 Source: Hybrid LLM + Rule-based Generator
 
 ### Card 1
-Here are 10 flashcards for the DP-600 exam, covering the topic of Semantic Modeling:
-
-### Card 1
-**Q:** What is Power Query Online used for in the visual query editor?
-**A:** Power Query Online is used to perform operations on data, which can then be translated into native language of the given data source through query folding.
-
-**Difficulty:** Basic
-**Tags:** dp-600, power query online, visual query editor
+**Q:** What is a Common Table Expression (CTE) in Microsoft Fabric's SQL query editor?
+**A:** A CTE, defined using the `WITH` clause, allows for more complex queries such as subqueries and can be used to rank data easily. For example:
+```sql
+WITH RankedCountries AS (
+    SELECT Country, NumberOfHolidays, PaidTimeOff,
+           RANK() OVER (ORDER BY NumberOfHolidays DESC) AS HolidayRank
+    FROM Countries
+)
+SELECT * FROM RankedCountries;
+```
+**Difficulty:** Intermediate  
+**Tags:** dp-600, CTE, SQL
 
 ---
 
 ### Card 2
-**Q:** How does Lakehouse Explorer output from a Common Table Expression (CTE) query?
-**A:** The output can be used within SELECT and CREATE VIEW SQLs in Lakehouse Explorer.
+**Q:** How can the output of a query in Lakehouse Explorer be used?
+**A:** The output from queries run in Lakehouse Explorer can be utilized within `SELECT` and `CREATE VIEW`, but not with `CREATE TABLE`. This is because Lakehouse focuses on data transformation rather than storage.
 
-**Difficulty:** Basic
-**Tags:** dp-600, lakehouse explorer, common table expression
+**Difficulty:** Basic  
+**Tags:** dp-600, lakehouse-explorer
 
 ---
 
 ### Card 3
-**Q:** What is the purpose of the WITH clause in T-SQL queries?
-**A:** The WITH clause allows you to define Common Table Expressions (CTEs) for use in SQL queries.
+**Q:** What are the main components of Microsoft Fabric's visual query editor?
+**A:** The visual query editor uses Power Query Online with a modified display for query folding into native data source language (T-SQL), providing operations that can be viewed and copied as T-SQL code.
 
-**Difficulty:** Intermediate
-**Tags:** dp-600, with clause, common table expression
+**Difficulty:** Basic  
+**Tags:** dp-600, visual-query-editor
 
 ---
 
 ### Card 4
-**Q:** What is OneLake and its relationship with Power BI?
-**A:** OneLake is a semantic layer that enables data modeling and provides a unified view of data across different sources in Power BI.
+**Q:** How is the `GROUP BY` clause used in Microsoft Fabric?
+**A:** The `GROUP BY` clause aggregates data based on common characteristics. For example:
+```sql
+SELECT Department, COUNT(*) AS EmployeeCount
+FROM Employees
+GROUP BY Department;
+```
+This groups employees by department and counts them.
 
-**Difficulty:** Intermediate
-**Tags:** dp-600, onelake, power bi
+**Difficulty:** Basic  
+**Tags:** dp-600, group-by
 
 ---
 
 ### Card 5
-**Q:** What are the key differences between Lakehouse and Warehouse in Fabric?
-**A:** Lakehouse supports both structured and unstructured data, while Warehouse is optimized for structured data and SQL queries.
+**Q:** What is the difference between Power BI's visual query editor and Microsoft Fabric's visual query editor?
+**A:** While both use Power Query Online, Microsoft Fabric’s visual query editor modifies it for better integration with data sources through query folding, providing T-SQL code translation.
 
-**Difficulty:** Basic
-**Tags:** dp-600, lakehouse, warehouse
+**Difficulty:** Intermediate  
+**Tags:** dp-600, power-bi, fabric
 
 ---
 
 ### Card 6
-**Q:** How does Power Query Online translate operations into T-SQL?
-**A:** Operations performed in the visual query editor are translated into native language of the given data source through query folding.
+**Q:** How does OneLake integrate with Lakehouse and Warehouse?
+**A:** OneLake integrates by serving as a unified layer that combines the functionalities of both Lakehouse (for unstructured data) and Warehouse (for structured data), providing a single entry point for data exploration and analysis.
 
-**Difficulty:** Intermediate
-**Tags:** dp-600, power query online, t-sql
+**Difficulty:** Intermediate  
+**Tags:** dp-600, onelake
 
 ---
 
 ### Card 7
-**Q:** What is the purpose of the visual query editor in Power BI?
-**A:** The visual query editor allows users to create queries using a graphical interface, which can then be translated into T-SQL.
+**Q:** What is query folding in Microsoft Fabric's visual query editor?
+**A:** Query folding translates operations performed within the visual query editor into native SQL (T-SQL) code optimized for the underlying data source.
 
-**Difficulty:** Basic
-**Tags:** dp-600, visual query editor, power bi
+**Difficulty:** Basic  
+**Tags:** dp-600, query-folding
 
 ---
 
 ### Card 8
-**Q:** How does Common Table Expression (CTE) rank individual countries based on public holidays?
-**A:** A CTE can be used to rank individual countries based on the number of public holidays and paid time within them.
+**Q:** What is a key feature of Microsoft Fabric’s Lakehouse compared to traditional warehouses?
+**A:** A key feature is its support for both structured and unstructured data, utilizing Delta Lake storage format for efficient handling.
 
-**Difficulty:** Intermediate
-**Tags:** dp-600, common table expression, ranking
+**Difficulty:** Basic  
+**Tags:** dp-600, lakehouse
 
 ---
 
 ### Card 9
-**Q:** What is the difference between GROUP BY and its alternatives in Power BI?
-**A:** For details about GROUP BY , please visit learn.microsoft.com/sql/t-sql/queries/select-group-by-transact-sql?view=fabric.
+**Q:** How does the visual query editor in Microsoft Fabric differ from traditional SQL editors?
+**A:** The visual query editor uses Power Query Online with modifications to support query folding into T-SQL, enabling seamless integration and optimization for data sources.
 
-**Difficulty:** Basic
-**Tags:** dp-600, group by, power bi
+**Difficulty:** Intermediate  
+**Tags:** dp-600, visual-query-editor
 
 ---
 
 ### Card 10
-**Q:** What is query folding in Power Query Online?
-**A:** Query folding allows individual operations or steps to be translated into the native language of the given data source.
+**Q:** What is the role of Common Table Expressions (CTEs) in enhancing SQL queries within Microsoft Fabric?
+**A:** CTEs allow complex queries to be written more clearly and efficiently. They can be used for subqueries, ranking functions, and recursive operations.
 
-**Difficulty:** Intermediate
-**Tags:** dp-600, power query online, query folding
+**Difficulty:** Intermediate  
+**Tags:** dp-600, cte
 
 ---
 

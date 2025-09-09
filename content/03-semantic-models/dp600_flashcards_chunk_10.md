@@ -1,116 +1,137 @@
 # DP-600 Flashcards - Dp600_Flashcards_Chunk_10
 
-Generated: 2025-09-08 01:05
+Generated: 2025-09-08 20:27
 Source: Hybrid LLM + Rule-based Generator
 
 ### Card 1
-Here are 10 flashcards based on the provided content:
+**Q:** What is the `COUNTROWS` DAX function used for?
+**A:** The `COUNTROWS` DAX function counts the number of rows in a table or an expression that returns a table.
+Example: `Sale Rows = COUNTROWS(Sale)`
+This measure returns the count of rows within the Sale table.
 
-### Card 1
-**Q:** What is the difference between COUNT, COUNTA, COUNTX, and COUNTAX functions in DAX?
-**A:** 
-- **COUNT**: Counts non-blank values of a single column.
-- **COUNTA**: Counts non-blank values regardless of data type.
-- **COUNTX**: Counts non-blank expressions when iterating over a table.
-- **COUNTAX**: Same as COUNTX.
-
-**Difficulty:** Intermediate
-**Tags:** DAX, semantic modeling
+**Difficulty:** Basic
+**Tags:** dp-600, dax, semantic-model
 
 ---
 
 ### Card 2
-**Q:** How can you use the COUNT function in Power BI to count rows in a table?
-**A:** To count rows using COUNT:
-- Use COUNTROWS with a table expression.
-- Count non-blank values in a single column using COUNT.
+**Q:** How does the DISTINCTCOUNT DAX function work?
+**A:** The `DISTINCTCOUNT` function counts the number of distinct values in a column or columns.
+Example: `Distinct Customers = DISTINCTCOUNT(Sales[CustomerID])`
+This measure returns the count of unique Customer IDs.
 
 **Difficulty:** Basic
-**Tags:** PowerBI, DAX
+**Tags:** dp-600, dax, semantic-model
 
 ---
 
 ### Card 3
-**Q:** What is the purpose of SUMMARIZE in a DAX formula?
-**A:** To group and summarize data from a table or expression.
+**Q:** What is the difference between COUNT and COUNTA in DAX?
+**A:** 
+- `COUNT` counts non-blank values but only for numeric types.
+Example: `Count Numeric = COUNT(Sales[OrderQty])`
+- `COUNTA` counts all non-blank values regardless of data type.
+Example: `All NonBlank = COUNTA(Sales[CustomerName])`
 
-**Difficulty:** Intermediate
-**Tags:** DAX, semantic modeling
+**Difficulty:** Basic
+**Tags:** dp-600, dax, semantic-model
 
 ---
 
 ### Card 4
-**Q:** How do you count non-blank values in a column using COUNTBLANK in DAX?
-**A:** To count blank values using COUNTBLANK:
-- Use COUNTBLANK with a column reference.
-- Returns the number of blank values in a column.
+**Q:** Explain the purpose and usage of the DISTINCTCOUNTNOBLANK function in DAX.
+**A:** The `DISTINCTCOUNTNOBLANK` is used to count distinct non-blank values in a column. It's useful when you need to ignore blank entries while counting unique items.
+Example: 
+```
+Distinct NonBlankCustomers = DISTINCTCOUNTNOBLANK(Sales[CustomerID])
+```
 
-**Difficulty:** Basic
-**Tags:** DAX
+**Difficulty:** Intermediate
+**Tags:** dp-600, dax, semantic-model
 
 ---
 
 ### Card 5
-**Q:** What is the difference between ROW and COLUMN functions in Power BI?
-**A:** 
-- **ROW**: Returns the row context for a table expression.
-- **COLUMN**: Returns the column context for a table expression.
+**Q:** What does the COUNTX function do in DAX?
+**A:** The `COUNTX` function counts rows where a given expression is not blank.
+Example:
+```DAX
+CountXInvoiceDelivery = COUNTX(Sales, Sales[InvoiceDateKey] <> BLANK() || Sales[DeliveryDateKey] <> BLANK())
+```
+This measure returns the count of sales entries where either invoice or delivery date keys are non-blank.
 
 **Difficulty:** Intermediate
-**Tags:** PowerBI, DAX
+**Tags:** dp-600, dax, semantic-model
 
 ---
 
 ### Card 6
-**Q:** How can you use COUNTX to count non-blank expressions when iterating over a table?
-**A:** To count non-blank values using COUNTX:
-- Use COUNTX with a table and an expression.
-- Evaluates the expression in row context.
+**Q:** How is COUNTAX used in DAX?
+**A:** The `COUNTAX` function counts the number of rows that satisfy a condition where an expression evaluates to non-blank.
+Example: 
+```DAX
+CountWithCondition = COUNTAX(Sales, Sales[OrderQty] > 0)
+```
+This measure returns the count of sales orders with positive quantities.
 
 **Difficulty:** Intermediate
-**Tags:** DAX, semantic modeling
+**Tags:** dp-600, dax, semantic-model
 
 ---
 
 ### Card 7
-**Q:** What is the purpose of the context parameter in DAX functions?
-**A:** To specify the context for calculations.
+**Q:** What is the use of SUMMARIZE in DAX?
+**A:** The `SUMMARIZE` function creates an in-memory table that contains a summary or rollup of data from the specified table.
+Example:
+```DAX
+YearsAndMonths = SUMMARIZE(Sales, 'Date'[Year], 'Date'[Month])
+```
+This generates a table summarizing sales by year and month.
 
-**Difficulty:** Basic
-**Tags:** DAX
+**Difficulty:** Intermediate
+**Tags:** dp-600, dax, semantic-model
 
 ---
 
 ### Card 8
-**Q:** How can you count blank values using COUNTBLANK in a formula?
-**A:** To count blank values:
-- Use COUNTBLANK with a column reference.
-- Returns the number of blank values.
+**Q:** What does the COUNTBLANK function do in DAX?
+**A:** The `COUNTBLANK` function counts the number of blank values within a column.
+Example:
+```DAX
+BlankDeliveryDates = COUNTBLANK(Sales[DeliveryDateKey])
+```
+This measure returns the count of rows where Delivery Date Key is blank.
 
-**Difficulty:** Intermediate
-**Tags:** DAX
+**Difficulty:** Basic
+**Tags:** dp-600, dax, semantic-model
 
 ---
 
 ### Card 9
-**Q:** What is the difference between ROW and COLUMN functions when used with SUMMARIZE?
-**A:** 
-- **ROW**: Returns the row context for a table expression in SUMMARIZE.
-- **COLUMN**: Returns the column context for a table expression in SUMMARIZE.
+**Q:** How do you use SUMMARIZE and COUNTROWS together in DAX?
+**A:** `SUMMARIZE` can be used to group data by one or more columns, and then `COUNTROWS` counts the resulting rows.
+Example:
+```DAX
+DistinctYearMonth = COUNTROWS(SUMMARIZE(Sales, 'Date'[Year], 'Date'[Month]))
+```
+This measure returns the count of distinct year-month combinations in sales.
 
 **Difficulty:** Intermediate
-**Tags:** DAX, semantic modeling
+**Tags:** dp-600, dax, semantic-model
 
 ---
 
 ### Card 10
-**Q:** How do you use COUNTA to count non-blank values regardless of data type?
-**A:** To count non-blank values:
-- Use COUNTA with a column reference.
-- Counts non-blank values regardless of data type.
+**Q:** What is the role of COUNTAX when dealing with dynamic tables?
+**A:** `COUNTAX` evaluates an expression for each row within a table and counts the number of non-blank results.
+Example:
+```DAX
+DynamicTableCount = COUNTAX(DynamicTable, [ColumnExpression] <> BLANK())
+```
+This measure returns the count of rows where the evaluated expression is not blank.
 
-**Difficulty:** Basic
-**Tags:** DAX
+**Difficulty:** Intermediate
+**Tags:** dp-600, dax, semantic-model
 
 ---
 

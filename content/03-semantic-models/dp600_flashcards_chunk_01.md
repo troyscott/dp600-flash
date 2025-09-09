@@ -1,96 +1,124 @@
 # DP-600 Flashcards - Dp600_Flashcards_Chunk_01
 
-Generated: 2025-09-08 01:03
+Generated: 2025-09-08 20:19
 Source: Hybrid LLM + Rule-based Generator
 
-### Card 3
-**Q:** What is Semantic Modeling, and why is it important for data analysis?
-**A:** Semantic modeling is a process of defining the meaning and structure of data entities using metadata. It's crucial for data analysis as it enables organizations to create a shared understanding of their data, improve data quality, and support decision-making.
+### Card 1
+**Q:** How do you create a semantic model using Microsoft Fabric?
+**A:** To create a semantic model:
+- Open **Fabric Data Flows**
+- Design data models that incorporate relationships and hierarchies
+- Publish the model as a dataset to be used in Power BI or other analytics tools
+
+**Difficulty:** Intermediate
+**Tags:** dp-600, semantic modeling, fabric
+
+---
+
+### Card 2
+**Q:** What are the main components of Data Factory integration with Microsoft Fabric?
+**A:** Main components include:
+- **Data flows**: Transform and move data across various sources
+- **Pipelines**: Automated workflows to orchestrate data movement and processing
+- **Connections**: Establish secure connections to diverse data stores
 
 **Difficulty:** Basic
-**Tags:** dp-600, semantic modeling
+**Tags:** dp-600, data factory, integration
+
+---
+
+### Card 3
+**Q:** How does Power BI integrate with Microsoft Fabric for data analysis?
+**A:** Integration involves:
+- Accessing datasets created in Fabric directly from Power BI Service
+- Using Power BI Desktop to visualize and analyze data stored in Fabric
+- Leveraging Power BI's reporting features on top of Fabric’s semantic models
+
+**Difficulty:** Intermediate
+**Tags:** dp-600, power bi, integration
 
 ---
 
 ### Card 4
-**Q:** What are the benefits of using Microsoft Power BI with Microsoft Fabric?
-**A:** Benefits include:
-- Enhanced visualization capabilities
-- Improved data analysis and reporting
-- Seamless integration with other Microsoft tools
-- Simplified data preparation and management
+**Q:** What is the primary function of a Lakehouse in Microsoft Fabric?
+**A:** Primary functions:
+- Store large volumes of data in an accessible and scalable manner
+- Support both structured and semi-structured/unstructured data formats
+- Enable efficient querying and analytics with integrated Delta Lake storage
 
-**Difficulty:** Intermediate
-**Tags:** dp-600, power bi
+**Difficulty:** Basic
+**Tags:** dp-600, lakehouse, function
 
 ---
 
 ### Card 5
-**Q:** How does Data Factory integrate with Microsoft Fabric for data governance?
-**A:** Data Factory integrates with Fabric through:
-- **Data Factory pipelines**: Define data processing and transformation workflows
-- **Data Factory datasets**: Manage data sources and schema definition
-- **Data Factory flows**: Automate data movement and integration
+**Q:** How does a Warehouse differ from a Lakehouse in Microsoft Fabric?
+**A:** Differences include:
+- **Lakehouse**: Supports unstructured data alongside structured data, uses Delta Lake storage format.
+- **Warehouse**: Optimized for structured data and fast SQL query performance.
 
-**Difficulty:** Advanced
-**Tags:** dp-600, datafactory
+**Difficulty:** Basic
+**Tags:** dp-600, warehouse, lakehouse
 
 ---
 
 ### Card 6
-**Q:** What is the main difference between a Lakehouse and a Warehouse in Microsoft Fabric?
-**A:** A Lakehouse is designed to store and process both structured and unstructured data, while a Warehouse is optimized for structured data and SQL queries.
+**Q:** What steps are involved in setting up Row-Level Security (RLS) in Microsoft Fabric?
+**A:** Steps to set RLS:
+- Define **security roles**
+- Create **row-level filters** using DAX expressions
+- Assign security roles to users and groups within Azure AD
 
-**Difficulty:** Basic
-**Tags:** dp-600, lakehouse
+**Difficulty:** Intermediate
+**Tags:** dp-600, rls, security
 
 ---
 
 ### Card 7
-**Q:** How does Power BI use Semantic Modeling with Microsoft Fabric?
-**A:** Power BI uses semantic modeling to:
-- **Connect to data sources**: Define relationships between tables and fields
-- **Model data entities**: Create a shared understanding of data meaning and structure
-- **Enhance data analysis**: Support more accurate and meaningful insights
+**Q:** How do you enhance data governance in Microsoft Fabric?
+**A:** Enhance governance through:
+- Implementing **data lineage tracking**
+- Utilizing **data quality services**
+- Enforcing **metadata management**
 
 **Difficulty:** Intermediate
-**Tags:** dp-600, power bi, semantic modeling
+**Tags:** dp-600, data governance, fabric
 
 ---
 
 ### Card 8
-**Q:** What is the role of Azure AD in Microsoft Fabric security?
-**A:** Azure AD integrates with Fabric to:
-- **Manage user access**: Enforce identity and authentication policies
-- **Monitor data access**: Track and audit data permissions
-- **Provide single sign-on**: Simplify user login and interaction
+**Q:** What are the benefits of integrating Power BI with Microsoft Fabric?
+**A:** Benefits include:
+- Seamless access to rich datasets for analytics
+- Enhanced collaboration through shared workspaces and datasets
+- Improved scalability and performance leveraging Fabric’s capabilities
 
-**Difficulty:** Intermediate
-**Tags:** dp-600, azuread
+**Difficulty:** Basic
+**Tags:** dp-600, power bi, fabric integration
 
 ---
 
 ### Card 9
-**Q:** How does Lakehouse differ from traditional data warehousing in Microsoft Fabric?
-**A:** Key differences include:
-- **Flexible schema**: Store and process both structured and unstructured data
-- **Delta format storage**: Optimize for delta operations and change data capture
-- **Scalability and performance**: Designed for high-performance analytics
+**Q:** How can you optimize data storage costs in Microsoft Fabric?
+**A:** Optimization strategies:
+- Implement **data lifecycle management**
+- Use **compression and columnar formats** for efficient storage
+- Regularly **archive or delete old data**
 
-**Difficulty:** Basic
-**Tags:** dp-600, lakehouse
+**Difficulty:** Intermediate
+**Tags:** dp-600, cost optimization, fabric
 
 ---
 
 ### Card 10
-**Q:** What is the purpose of Data Factory in Microsoft Fabric for data preparation?
-**A:** Data Factory's primary function is to:
-- **Prepare data for analysis**: Transform and process data into a usable format
-- **Manage data pipelines**: Automate data movement and integration workflows
-- **Support data governance**: Ensure data quality, security, and compliance
+**Q:** What is the role of semantic modeling in Microsoft Fabric?
+**A:** Semantic models:
+- Provide a business-friendly layer over raw data for analytics
+- Enhance query performance through optimized schema design
+- Support complex analytical queries and reporting needs
 
-**Difficulty:** Advanced
-**Tags:** dp-600, datafactory
+**Difficulty:** Basic
+**Tags:** dp-600, semantic modeling, fabric
 
 ---
 

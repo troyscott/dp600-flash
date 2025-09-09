@@ -1,98 +1,121 @@
 # DP-600 Flashcards - Dp600_Flashcards_Chunk_08
 
-Generated: 2025-09-08 01:04
+Generated: 2025-09-08 20:25
 Source: Hybrid LLM + Rule-based Generator
 
 ### Card 1
-Here are 10 flashcards for DP-600 exam:
+**Q:** How do you design a semantic model using Power BI?
+**A:** Designing a semantic model involves:
+- Creating relationships between tables
+- Defining data types for columns
+- Setting up measures and calculated columns using DAX
+- Adding hierarchies to dimensions
 
-### Card 1
-**Q:** What is the purpose of a semantic model in Power BI?
-**A:** A semantic model represents your data's meaning and relationships, enabling data analysis and visualizations.
-
-**Difficulty:** Intermediate
-**Tags:** dp-600, powerbi, semanticmodel
+**Difficulty:** Basic
+**Tags:** dp-600, semantic-model, power-bi
 
 ---
 
 ### Card 2
-**Q:** How do you create a relationship between two tables in a Power BI semantic model?
-**A:** You can create relationships by using the Data Model View in Power BI Desktop and dragging one table to another.
+**Q:** What is the purpose of a measure in Power BI's semantic model?
+**A:** A measure:
+- Is defined using DAX formulas
+- Provides calculations that are context-sensitive
+- Supports complex aggregations and analytical functions
 
-**Difficulty:** Advanced
-**Tags:** dp-600, powerbi, datamodel
+**Difficulty:** Basic
+**Tags:** dp-600, semantic-model, dax
 
 ---
 
 ### Card 3
-**Q:** What is DAX, and how is it used in Power BI?
-**A:** DAX (Data Analysis Expressions) is a formula language used to create calculations and measures in Power BI.
+**Q:** What is the `DIVIDE` function in DAX used for?
+**A:** The `DIVIDE` function:
+- Safely divides two numbers (numerator and denominator)
+- Returns an alternate result if division by zero occurs
+- Helps prevent errors in calculations
 
 **Difficulty:** Basic
-**Tags:** dp-600, dax, powerbi
+**Tags:** dp-600, dax, math-functions
 
 ---
 
 ### Card 4
-**Q:** What is the purpose of a measure in a Power BI semantic model?
-**A:** A measure calculates a value from one or more columns and returns it as a single value.
+**Q:** How does the `EVEN` function work in DAX?
+**A:** The `EVEN` function:
+- Rounds a number up to the nearest even integer
+- Useful for scenarios requiring even numbers only
 
-**Difficulty:** Intermediate
-**Tags:** dp-600, powerbi, measures
+**Difficulty:** Basic
+**Tags:** dp-600, dax, math-functions
 
 ---
 
 ### Card 5
-**Q:** How do you create a calculated column in DAX?
-**A:** You can create a calculated column using the formula syntax, such as `=SUM([Sales])`.
+**Q:** What does the `MOD` function return in DAX?
+**A:** The `MOD` function:
+- Returns the remainder after a number is divided by a divisor
+- Commonly used for determining divisibility and creating patterns
 
 **Difficulty:** Basic
-**Tags:** dp-600, dax, calculatedcolumn
+**Tags:** dp-600, dax, math-functions
 
 ---
 
 ### Card 6
-**Q:** What is Row-Level Security (RLS) in Power BI?
-**A:** RLS enables you to restrict access to data based on the current user's role or membership in a security group.
+**Q:** What does the `PI()` function return in DAX?
+**A:** The `PI()` function:
+- Returns the mathematical constant Pi (π)
+- Used for calculations involving circles and trigonometry
 
-**Difficulty:** Intermediate
-**Tags:** dp-600, powerbi, rls
+**Difficulty:** Basic
+**Tags:** dp-600, dax, math-functions
 
 ---
 
 ### Card 7
-**Q:** How do you create a relationship between a table and its related tables in Power BI?
-**A:** You can create relationships by using the Data Model View in Power BI Desktop and dragging one table to another.
+**Q:** What is the purpose of a calculated column in Power BI?
+**A:** A calculated column:
+- Uses DAX formulas to generate values based on existing data
+- Adds new columns with dynamic content that recalculates when underlying data changes
 
-**Difficulty:** Advanced
-**Tags:** dp-600, powerbi, datamodel
+**Difficulty:** Basic
+**Tags:** dp-600, semantic-model, dax
 
 ---
 
 ### Card 8
-**Q:** What is a data type in DAX, and how do you use it?
-**A:** A data type specifies the format of a column's values, such as Text, Date, or Number.
+**Q:** What is the difference between `ROUNDDOWN` and `FLOOR` in DAX?
+**A:** Differences:
+- `ROUNDDOWN`: Rounds a number towards zero to a specified precision.
+- `FLOOR`: Rounds a number down (towards zero) to the nearest multiple of significance.
 
 **Difficulty:** Basic
-**Tags:** dp-600, dax, datatype
+**Tags:** dp-600, dax, math-functions
 
 ---
 
 ### Card 9
-**Q:** How do you calculate an aggregate value in DAX?
-**A:** You can use functions like SUMX, AVERAGEX, or MAXX to calculate aggregates.
+**Q:** What is the purpose of relationships in Power BI's semantic model?
+**A:** Relationships:
+- Connect tables based on common columns (keys)
+- Enable data filtering and aggregation across related tables
+- Support complex queries involving multiple entities
 
-**Difficulty:** Intermediate
-**Tags:** dp-600, dax, aggregations
+**Difficulty:** Basic
+**Tags:** dp-600, semantic-model, power-bi
 
 ---
 
 ### Card 10
-**Q:** What is a measure function in Power BI?
-**A:** A measure function is used to calculate a value from one or more columns and returns it as a single value.
+**Q:** How is a hierarchy defined in Power BI?
+**A:** A hierarchy:
+- Organizes data into levels (e.g., Year > Quarter > Month)
+- Enables drill-down and roll-up capabilities for analysis
+- Can be created from dimension tables with natural key relationships
 
-**Difficulty:** Advanced
-**Tags:** dp-600, powerbi, measures
+**Difficulty:** Basic
+**Tags:** dp-600, semantic-model, power-bi
 
 ---
 

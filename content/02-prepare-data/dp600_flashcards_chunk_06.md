@@ -1,81 +1,122 @@
 # DP-600 Flashcards - Dp600_Flashcards_Chunk_06
 
-Generated: 2025-09-08 01:04
+Generated: 2025-09-08 20:24
 Source: Hybrid LLM + Rule-based Generator
 
-### Card 3
-**Q:** What is the purpose of data cleansing in data preparation?
-**A:** Data cleansing is integral to data preparation, ensuring data is ready for subsequent use and processing by addressing validity, accuracy, and completeness.
+### Card 1
+**Q:** How do you implement data cleansing in Microsoft Fabric?
+**A:** To implement data cleansing:
+- Ensure **validity**: Verify that data types conform to defined rules.
+- Check for **accuracy**: Compare incoming data against historical thresholds and measure standard deviation.
+- Assess **completeness**: Identify missing values or incomplete records.
+
+**Difficulty:** Intermediate
+**Tags:** dp-600, data-cleansing, fabric
+
+---
+
+### Card 2
+**Q:** What is the role of DAX in Microsoft Fabric?
+**A:** DAX (Data Analysis Expressions) is used for:
+- Creating calculated columns and measures.
+- Performing complex calculations on tabular models.
+- Enhancing query capabilities with advanced functions.
 
 **Difficulty:** Basic
-**Tags:** dp-600, data-cleansing
+**Tags:** dp-600, dax, fabric
+
+---
+
+### Card 3
+**Q:** What are the key features of a Lakehouse in Microsoft Fabric?
+**A:** Key features:
+- **Storage**: Supports Delta Lake for storage.
+- **Flexibility**: Handles both structured and unstructured data.
+- **Data Management**: Offers comprehensive data management capabilities.
+
+**Difficulty:** Basic
+**Tags:** dp-600, lakehouse, fabric
 
 ---
 
 ### Card 4
-**Q:** How do you measure the accuracy of data?
-**A:** Accuracy can be measured using the standard deviation, with smaller deviations indicating more accurate data. Graphical representations like Box and Whisker plots help visualize data distribution.
+**Q:** What are the key features of a Warehouse in Microsoft Fabric?
+**A:** Key features:
+- **Optimization**: Optimized for structured data and SQL queries.
+- **Performance**: Provides faster analytical query performance.
+- **Ease of Use**: Simplifies data warehousing tasks.
 
-**Difficulty:** Intermediate
-**Tags:** dp-600, accuracy, data-quality
+**Difficulty:** Basic
+**Tags:** dp-600, warehouse, fabric
 
 ---
 
 ### Card 5
-**Q:** What is the difference between Row-Level Security (RLS) and Azure AD integration in workspace settings?
-**A:** RLS restricts access to specific rows within a dataset based on user roles, while Azure AD integration integrates workspace security with Active Directory for enhanced authentication.
+**Q:** How do you use KQL (Kusto Query Language) in Microsoft Fabric?
+**A:** To use KQL:
+- Write queries to manage and analyze large datasets.
+- Utilize built-in functions for data transformation and aggregation.
 
-**Difficulty:** Intermediate
-**Tags:** dp-600, rls, azure-ad
+**Difficulty:** Basic
+**Tags:** dp-600, kql, fabric
 
 ---
 
 ### Card 6
-**Q:** What is Delta Lake format used for in Lakehouse?
-**A:** Delta Lake format is optimized for Lakehouse, allowing for efficient and scalable data processing and analysis of unstructured and semi-structured data.
+**Q:** What is the difference between a calculated column and a measure in DAX?
+**A:** Differences:
+- **Calculated Column**: Creates new columns with values computed from existing data.
+- **Measure**: Defines calculations that can be used in reports or visualizations.
 
 **Difficulty:** Basic
-**Tags:** dp-600, lakehouse, deltalake
+**Tags:** dp-600, dax, fabric
 
 ---
 
 ### Card 7
-**Q:** What is the primary function of KQL in Data Factory?
-**A:** KQL (Kusto Query Language) is used to query and analyze data in Data Factory, enabling users to create custom queries for data processing and analysis.
+**Q:** What are the steps to implement row-level security (RLS) in Microsoft Fabric?
+**A:** Steps:
+1. Define security roles and users.
+2. Create RLS filters for datasets.
+3. Assign roles to users or groups.
 
 **Difficulty:** Intermediate
-**Tags:** dp-600, kql
+**Tags:** dp-600, rls, fabric
 
 ---
 
 ### Card 8
-**Q:** What are the key differences between Lakehouse and Warehouse in Fabric?
-**A:** Key differences:
-- **Lakehouse**: Supports both structured and unstructured data
-- **Warehouse**: Optimized for structured data and SQL queries
-- **Storage**: Lakehouse uses Delta Lake format
-- **Performance**: Warehouse provides faster analytical queries
+**Q:** How does Microsoft Fabric support data engineering?
+**A:** Support includes:
+- **ETL/ELT**: Provides tools and services for Extract, Transform, Load.
+- **Data Pipelines**: Enables creation of automated pipelines for data processing.
 
-**Difficulty:** Basic
-**Tags:** dp-600, lakehouse, warehouse
+**Difficulty:** Intermediate
+**Tags:** dp-600, etl, fabric
 
 ---
 
 ### Card 9
-**Q:** What is the purpose of DAX in Data Modeling?
-**A:** DAX (Data Analysis Expressions) is used to create custom calculations and expressions for data models, enabling users to analyze and visualize data more effectively.
+**Q:** What is the significance of Delta Lake in Microsoft Fabric?
+**A:** Significance:
+- Provides a unified storage layer.
+- Ensures ACID transactions and time travel capabilities.
+- Supports both data warehousing and lakehouse scenarios.
 
 **Difficulty:** Intermediate
-**Tags:** dp-600, dax
+**Tags:** dp-600, delta-lake, fabric
 
 ---
 
 ### Card 10
-**Q:** What is the benefit of using Lakehouse in data processing?
-**A:** Lakehouse provides a scalable and flexible architecture for handling unstructured and semi-structured data, enabling faster and more efficient data processing.
+**Q:** What are the key components of a data preparation process in Microsoft Fabric?
+**A:** Key components:
+- **Data Ingestion**: Importing raw data.
+- **Transformation**: Cleansing and enriching data.
+- **Validation**: Ensuring data quality.
 
-**Difficulty:** Intermediate
-**Tags:** dp-600, lakehouse
+**Difficulty:** Basic
+**Tags:** dp-600, data-preparation, fabric
 
 ---
 

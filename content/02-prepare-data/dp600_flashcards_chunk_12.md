@@ -1,129 +1,135 @@
 # DP-600 Flashcards - Dp600_Flashcards_Chunk_12
 
-Generated: 2025-09-08 01:05
+Generated: 2025-09-08 20:30
 Source: Hybrid LLM + Rule-based Generator
 
 ### Card 1
-Here are 10 flashcards for DP-600 exam, following the exact format:
+**Q:** How can you correct a graph showing incorrect quantity sales for black stock items?
+**A:** To fix the graph:
+- Create this measure:
+```DAX
+Total Quantity = CALCULATE(SUM(Sale[Quantity]), TREATAS(VALUES('Stock Item'[Stock Item Key]), Sale[Stock Item Key]))
+```
+This approach ensures accurate aggregation without altering data model relationships.
 
-### Card 1
-**Q:** How do you configure incremental refresh for a table in Power BI?
-**A:** To configure incremental refresh:
-- Enable **Incremental Refresh**
-- Configure **Table Refresh History**
-- Set **Refresh Schedule**
-- Check for any errors in **Refresh History**
-
-**Difficulty:** Intermediate
-**Tags:** dp-600, powerbi, incrementalrefresh
+**Difficulty:** Intermediate  
+**Tags:** dp-600, DAX, measures
 
 ---
 
 ### Card 2
-**Q:** What is the purpose of Delta Lake format in Lakehouse architecture?
-**A:** The primary purpose of Delta Lake:
-- Enables **Efficient data ingestion**
-- Allows for **Real-time analytics**
-- Supports **Data lineage tracking**
+**Q:** What is the best way to create a line chart showing sales quantity by invoice date when the relationship between Date and Sale tables based on Invoice Date Key is inactive?
+**A:** To address this:
+- Activate the relationship between 'Date'[Date] and Sale[Invoice Date Key].
+This action allows direct querying without additional measures.
 
-**Difficulty:** Basic
-**Tags:** dp-600, lakehouse, deltalake
+**Difficulty:** Basic  
+**Tags:** dp-600, relationships, DAX
 
 ---
 
 ### Card 3
-**Q:** What is Row-Level Security (RLS) in Microsoft Fabric workspace?
-**A:** RLS:
-- Grants access to specific rows of a dataset based on user roles
-- Enables **Fine-grained security**
-- Provides **Compliance with data governance policies**
+**Q:** Why might incremental refresh not be functioning as expected for a dataset sourced from Azure SQL Database?
+**A:** The likely issue is:
+- A transformation step breaks query folding before date filtering.
+This disrupts the ability to leverage server-side processing benefits of incremental refresh.
 
-**Difficulty:** Intermediate
-**Tags:** dp-600, security, rls
+**Difficulty:** Intermediate  
+**Tags:** dp-600, Power BI, transformations
 
 ---
 
 ### Card 4
-**Q:** How do you create an active physical relationship between two tables in Power BI?
-**A:** To create a new relationship:
-- Navigate to the **Modeling** tab
-- Select the table fields that will be used for the relationship
-- Click on the **Add Relationship** button
+**Q:** How do you ensure accurate data aggregation in Power BI when there is a need for complex measure calculations?
+**A:** Use DAX measures to handle complex aggregations:
+```DAX
+Total Quantity = CALCULATE(SUM(Sale[Quantity]), TREATAS(VALUES('Stock Item'[Stock Item Key]), Sale[Stock Item Key]))
+```
+This ensures the measure correctly aggregates data based on specific filters.
 
-**Difficulty:** Basic
-**Tags:** powerbi, modeling, relationships
+**Difficulty:** Intermediate  
+**Tags:** dp-600, DAX, measures
 
 ---
 
 ### Card 5
-**Q:** What is the key difference between Lakehouse and Warehouse in Fabric?
-**A:** Key differences:
-- **Lakehouse**: Supports both structured and unstructured data
-- **Warehouse**: Optimized for structured data and SQL queries
-- **Storage**: Lakehouse uses Delta Lake format
+**Q:** What is a recommended approach to maintain flexibility and performance in Power BI datasets while supporting both daily sales analysis by delivery date and invoice date?
+**A:** Maintain active relationships for both scenarios:
+- Keep the relationship between 'Date'[Delivery Date] and Sale[Delivery Date Key].
+- Activate the relationship between 'Date'[Invoice Date] and Sale[Invoice Date Key].
 
-**Difficulty:** Basic
-**Tags:** dp-600, lakehouse, warehouse
+This allows simultaneous use of different date keys without disrupting data integrity.
+
+**Difficulty:** Intermediate  
+**Tags:** dp-600, relationships, Power BI
 
 ---
 
 ### Card 6
-**Q:** What is Query Folding in Power BI?
-**A:** Query Folding:
-- Enables faster query performance by reducing the number of rows processed
-- Improves **query execution speed**
-- Supports **conditional aggregation**
+**Q:** How can you optimize dataset refresh in Power BI when dealing with large fact tables?
+**A:** Implement incremental refresh:
+1. Configure filtering on the sales date column.
+2. Ensure no transformation steps break query folding prior to applying filters.
 
-**Difficulty:** Intermediate
-**Tags:** powerbi, queryfolding
+This method reduces data volume processed during each refresh cycle.
+
+**Difficulty:** Intermediate  
+**Tags:** dp-600, Power BI, transformations
 
 ---
 
 ### Card 7
-**Q:** How do you create a measure in Power BI using the TREATAS function?
-**A:** To create a new measure:
-- Navigate to the **Modeling** tab
-- Select the fields that will be used for the calculation
-- Use the `TREATAS` function
+**Q:** What is the significance of row-level security (RLS) in a Microsoft Fabric workspace?
+**A:** RLS in Fabric enhances security by:
+- Allowing conditional access based on user roles.
+- Enabling granular data visibility control per user or group.
 
-**Difficulty:** Basic
-**Tags:** powerbi, modeling, treatas
+This feature is crucial for environments with diverse user permissions and data sensitivity levels.
+
+**Difficulty:** Intermediate  
+**Tags:** dp-600, security, workspace
 
 ---
 
 ### Card 8
-**Q:** What is Azure AD integration in Microsoft Fabric workspace?
-**A:** Azure AD integration:
-- Enables **Single sign-on (SSO)**
-- Supports **Multi-factor authentication**
-- Provides **Improved security**
+**Q:** How do you create an active physical relationship between the Sale and Stock Item tables in Power BI to ensure accurate data aggregation?
+**A:** To establish a robust relationship:
+1. Create a new relationship.
+2. Link `Sale[Stock Item Key]` with `'Stock Item'[Stock Item Key]`.
+3. Ensure this is set as an active, physical relationship for reliable measure calculations.
 
-**Difficulty:** Intermediate
-**Tags:** dp-600, security, azuread
+This setup ensures correct data filtering and aggregation across tables.
+
+**Difficulty:** Basic  
+**Tags:** dp-600, relationships, Power BI
 
 ---
 
 ### Card 9
-**Q:** What is the purpose of DAX in Power BI?
-**A:** The primary purpose of DAX:
-- Enables **Data modeling and analysis**
-- Supports **Conditional aggregation**
-- Provides **Flexibility in data calculations**
+**Q:** What are the main differences between a Lakehouse and Warehouse in Microsoft Fabric?
+**A:** Key distinctions:
+- **Lakehouse**: Supports both structured and unstructured data.
+- **Warehouse**: Optimized for structured data and SQL queries.
+- Storage: Lakehouse uses `Delta Lake` format.
+- Performance: Warehouse provides faster analytical query performance.
 
-**Difficulty:** Intermediate
-**Tags:** powerbi, dax
+This understanding helps choose the right storage type based on dataset characteristics.
+
+**Difficulty:** Basic  
+**Tags:** dp-600, lakehouse, warehouse
 
 ---
 
 ### Card 10
-**Q:** How do you optimize data ingestion for a Lakehouse dataset?
-**A:** To optimize data ingestion:
-- Enable **Incremental refresh**
-- Configure **Delta Lake format**
-- Optimize **data processing and storage**
+**Q:** How do you troubleshoot an issue where incremental refresh in Power BI does not appear to be functioning properly?
+**A:** Steps for troubleshooting:
+1. Verify query folding is intact before date filtering.
+2. Ensure Azure SQL Database supports incremental refresh configurations.
 
-**Difficulty:** Intermediate
-**Tags:** dp-600, lakehouse, dataingestion
+Correcting these can enable efficient dataset refreshing.
+
+**Difficulty:** Intermediate  
+**Tags:** dp-600, Power BI, transformations
 
 ---
 

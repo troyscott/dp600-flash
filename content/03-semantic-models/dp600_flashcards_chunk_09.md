@@ -1,77 +1,104 @@
 # DP-600 Flashcards - Dp600_Flashcards_Chunk_09
 
-Generated: 2025-09-08 01:04
+Generated: 2025-09-08 20:26
 Source: Hybrid LLM + Rule-based Generator
 
-### Card 3
-**Q:** What is the purpose of SUMMARIZE in Power BI?
-**A:** SUMMARIZE is used to summarize a table by grouping rows based on selected columns, creating new row contexts for each group.
+### Card 1
+**Q:** How do you create a summarized table using DAX functions in Power BI?
+**A:** To create a summarized table:
+- Use `SUMMARIZE` or `SUMMARIZECOLUMNS`
+- Specify columns for grouping and aggregation if needed
+- Example: 
+```
+SUMMARIZE(Sale, 'Date'[Year], 'Date'[Month])
+```
 
 **Difficulty:** Basic
-**Tags:** powerbi, dax, summarze
+**Tags:** dp-600, dax, semantic-model
+
+---
+
+### Card 2
+**Q:** What is the difference between `SUMMARIZE` and `SUMMARIZECOLUMNS` in DAX?
+**A:** Key differences:
+- **SUMMARIZE**: Requires specifying a table name followed by columns to group.
+- **SUMMARIZECOLUMNS**: Only requires column names, no need for table specification.
+
+**Difficulty:** Basic
+**Tags:** dp-600, dax, semantic-model
+
+---
+
+### Card 3
+**Q:** How does `ADDCOLUMNS` function work in DAX?
+**A:** `ADDCOLUMNS`:
+- Adds new columns to an existing table.
+- Example: 
+```
+ADDCOLUMNS(ALL('Date'[Month], 'Date'[Month Number]), "Sale Rows", CALCULATE(COUNTROWS(Sale)))
+```
+
+**Difficulty:** Basic
+**Tags:** dp-600, dax, semantic-model
 
 ---
 
 ### Card 4
-**Q:** Why do you need to wrap COUNTROWS(Sales) in CALCULATE when using SUMMARIZE?
-**A:** You don't need to wrap COUNTROWS(Sales) in CALCULATE because SUMMARIZE creates a new row context for each part of the original table, eliminating the need for context transition.
+**Q:** What role does context transition play in DAX when using `ADDCOLUMNS`?
+**A:** Context transition:
+- Necessary to get distinct values for each row.
+- Example: 
+```
+CALCULATE(COUNTROWS(Sale))
+```
 
 **Difficulty:** Intermediate
-**Tags:** powerbi, dax, summarze
+**Tags:** dp-600, dax, semantic-model
 
 ---
 
 ### Card 5
-**Q:** What is the main difference between ADDCOLUMNS and SUMMARIZE?
-**A:** The main difference is that ADDCOLUMNS generates new columns with row context, while SUMMARIZE groups rows without creating a new row context.
+**Q:** How does `SELECTCOLUMNS` function differ from `ADDCOLUMNS` in DAX?
+**A:** Differences:
+- **SELECTCOLUMNS**: Filters columns to select specific ones.
+- **ADDCOLUMNS**: Adds new calculated columns.
 
-**Difficulty:** Advanced
-**Tags:** powerbi, dax, addcolums
+**Difficulty:** Basic
+**Tags:** dp-600, dax, semantic-model
 
 ---
 
 ### Card 6
-**Q:** How does ADDCOLUMNS create row context?
-**A:** ADDCOLUMNS creates row context by performing a context transition for each added column.
+**Q:** What is the purpose of row-level security (RLS) in Power BI?
+**A:** RLS:
+- Restricts data access for users.
+- Applies filters to queries based on user roles.
 
 **Difficulty:** Intermediate
-**Tags:** powerbi, dax, addcolumns
+**Tags:** dp-600, rls, semantic-model
 
 ---
 
 ### Card 7
-**Q:** What is the purpose of SELECTCOLUMNS in Power BI?
-**A:** SELECTCOLUMNS is used to select columns from a table and return them as a new table with row context.
+**Q:** How can you implement row-level security (RLS) in Power BI?
+**A:** Steps:
+1. Define RLS rules in the data model.
+2. Assign roles to users or groups.
+3. Apply RLS filters to datasets.
 
-**Difficulty:** Basic
-**Tags:** powerbi, dax, selectcolumns
+**Difficulty:** Intermediate
+**Tags:** dp-600, rls, semantic-model
 
 ---
 
 ### Card 8
-**Q:** How does SUMMARIZECOLUMNS work differently than SUMMARIZE?
-**A:** SUMMARIZECOLUMNS works differently because it creates a new table without specifying the original table, and includes a special blank row.
-
-**Difficulty:** Intermediate
-**Tags:** powerbi, dax, summarze
-
----
-
-### Card 9
-**Q:** What is the purpose of ADDCOLUMNS in Power BI?
-**A:** ADDCOLUMNS adds new columns to a table, generating row context in the process.
+**Q:** What is a semantic model in Power BI?
+**A:** A semantic model:
+- Represents business data and relationships.
+- Includes tables, columns, measures, and relationships.
 
 **Difficulty:** Basic
-**Tags:** powerbi, dax, addcolumns
-
----
-
-### Card 10
-**Q:** How can you use SUMMARIZE and ADDCOLUMNS equivalently?
-**A:** You can use SUMMARIZE and ADDCOLUMNS equivalently by using both functions to create a table with row context.
-
-**Difficulty:** Advanced
-**Tags:** powerbi, dax
+**Tags:** dp-600, semantic-model, power-bi
 
 ---
 
